@@ -1,0 +1,40 @@
+  <!-- ─── Footer ─────────────────────────────────────────────────────────────── -->
+  <footer class="footer-dark py-5 mt-5">
+    <div class="container text-center">
+      <div class="mb-3">
+        <a class="footer-brand fw-800 fs-5" href="/">
+          <i class="bi bi-database-fill-lock me-2 text-accent"></i>DataVault
+        </a>
+      </div>
+      <p class="text-muted small mb-2">
+        Built with ❤️ for the <strong>Cognifyz Technologies</strong> Web Development Internship
+      </p>
+      <p class="text-muted small mb-3">Task 01 — Server Setup &amp; Landing Page</p>
+      <div class="d-flex justify-content-center gap-3">
+        <a href="https://github.com/agrawalishan2005" target="_blank" class="footer-link">
+          <i class="bi bi-github fs-5"></i>
+        </a>
+        <a href="https://linkedin.com/in/ishan-agrawal" target="_blank" class="footer-link">
+          <i class="bi bi-linkedin fs-5"></i>
+        </a>
+      </div>
+      <hr class="my-4 border-secondary" />
+      <p class="text-muted" style="font-size: 0.78rem;">
+        &copy; <%= new Date().getFullYear() %> Ishan Agrawal. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Navbar scroll effect -->
+  <script>
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('mainNav');
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    });
+  </script>
+
+</body>
+</html>
