@@ -76,7 +76,7 @@ COG/
 
 Follow the build journey on LinkedIn where each task gets a dedicated video walkthrough:
 
-> 🔗 **[Follow on LinkedIn →](https://www.linkedin.com/in/ishan-agrawal)**
+> 🔗 **[Follow on LinkedIn →](https://www.linkedin.com/in/agrawalishan2005)**
 
 ---
 
@@ -84,7 +84,7 @@ Follow the build journey on LinkedIn where each task gets a dedicated video walk
 
 ```bash
 # Clone the repo
-git clone https://github.com/agrawalishan2005/cognifyz-webdev-internship.git
+git clone https://github.com/ishan2005/cognifyz-webdev-internship.git
 cd cognifyz-webdev-internship
 
 # Navigate to any task
@@ -101,6 +101,6 @@ npm start
 
 <div align="center">
 
-Made with ❤️ by **Ishan Agrawal** · Cognifyz Technologies Web Dev Internship
+Made with ❤️ by **[Ishan Agrawal](https://github.com/ishan2005)** · Cognifyz Technologies Web Dev Internship
 
 </div>
