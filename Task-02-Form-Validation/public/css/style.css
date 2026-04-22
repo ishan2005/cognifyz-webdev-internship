@@ -1,0 +1,185 @@
+/* =========================================================
+   DataVault — GitHub Light Theme
+   Task 02: Form Validation
+   ========================================================= */
+:root {
+  --gh-bg:          #ffffff;
+  --gh-bg-2:        #f6f8fa;
+  --gh-bg-3:        #eaeef2;
+  --gh-border:      #d0d7de;
+  --gh-text:        #1f2328;
+  --gh-text-2:      #656d76;
+  --gh-text-3:      #818b98;
+  --gh-blue:        #0969da;
+  --gh-green:       #1a7f37;
+  --gh-green-dark:  #1f883d;
+  --gh-red:         #cf222e;
+  --gh-orange:      #9a6700;
+  --gh-purple:      #8250df;
+  --gh-radius:      6px;
+  --gh-radius-lg:   12px;
+  --gh-shadow:      0 1px 3px rgba(31,35,40,0.12);
+  --gh-font:        -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  --gh-mono:        ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  --t:              all 0.18s ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--gh-font); background: var(--gh-bg); color: var(--gh-text); font-size: 14px; line-height: 1.5; }
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--gh-bg-2); }
+::-webkit-scrollbar-thumb { background: var(--gh-border); border-radius: 4px; }
+::selection { background: rgba(9,105,218,0.2); }
+
+/* ─── Navbar ─────────────────────────────────────────────── */
+.gh-navbar {
+  background: var(--gh-bg-2);
+  border-bottom: 1px solid var(--gh-border);
+  height: 62px; display: flex; align-items: center;
+  position: sticky; top: 0; z-index: 1000;
+}
+.gh-navbar .container { display: flex; align-items: center; gap: 16px; }
+.gh-logo { display: flex; align-items: center; gap: 8px; color: var(--gh-text); text-decoration: none; font-weight: 600; font-size: 15px; flex-shrink: 0; }
+.gh-logo svg { fill: var(--gh-text); }
+.gh-nav-links { display: flex; gap: 4px; margin-left: 8px; }
+.gh-nav-link { color: var(--gh-text); text-decoration: none; font-size: 14px; font-weight: 600; padding: 6px 8px; border-radius: var(--gh-radius); transition: var(--t); }
+.gh-nav-link:hover { background: var(--gh-bg-3); }
+.gh-nav-right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.gh-task-badge { background: rgba(9,105,218,0.08); border: 1px solid rgba(9,105,218,0.25); color: var(--gh-blue); padding: 2px 10px; border-radius: 50px; font-size: 12px; font-weight: 600; }
+.gh-btn { display: inline-flex; align-items: center; gap: 6px; padding: 5px 16px; border-radius: var(--gh-radius); font-size: 14px; font-weight: 500; font-family: var(--gh-font); cursor: pointer; border: 1px solid; transition: var(--t); text-decoration: none; white-space: nowrap; }
+.gh-btn-sm { padding: 3px 12px; font-size: 12px; }
+.gh-btn-default { background: var(--gh-bg-3); border-color: var(--gh-border); color: var(--gh-text); }
+.gh-btn-default:hover { background: #e9ecef; }
+.gh-btn-primary { background: var(--gh-green-dark); border-color: rgba(31,136,61,0.4); color: #fff; }
+.gh-btn-primary:hover { background: #2ea043; color: #fff; }
+
+/* ─── Main ───────────────────────────────────────────────── */
+.gh-main { padding: 40px 0 80px; min-height: calc(100vh - 62px - 100px); }
+
+/* ─── Page Header ────────────────────────────────────────── */
+.gh-page-header { margin-bottom: 24px; }
+.gh-section-label { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--gh-green); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.gh-section-label::before { content: ''; width: 8px; height: 8px; background: var(--gh-green); border-radius: 50%; display: inline-block; }
+.gh-page-title { font-size: 28px; font-weight: 700; margin-bottom: 6px; }
+.gh-page-desc { font-size: 15px; color: var(--gh-text-2); }
+.gh-page-desc code { background: var(--gh-bg-2); border: 1px solid var(--gh-border); border-radius: 4px; padding: 1px 6px; font-family: var(--gh-mono); font-size: 13px; color: var(--gh-text); }
+
+/* ─── Info Banner ────────────────────────────────────────── */
+.gh-info-banner {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: var(--gh-bg-2); border: 1px solid var(--gh-border);
+  border-radius: var(--gh-radius); padding: 12px 16px;
+  font-size: 13px; color: var(--gh-text-2); margin-bottom: 20px;
+}
+.gh-info-banner i { color: var(--gh-blue); font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.gh-info-banner code { background: var(--gh-bg-3); border-radius: 4px; padding: 1px 5px; font-family: var(--gh-mono); font-size: 12px; color: var(--gh-text); }
+
+/* ─── Form Wrapper ───────────────────────────────────────── */
+.gh-form-wrapper { background: var(--gh-bg); border: 1px solid var(--gh-border); border-radius: var(--gh-radius-lg); overflow: hidden; box-shadow: var(--gh-shadow); }
+.gh-form-header { background: var(--gh-bg-2); border-bottom: 1px solid var(--gh-border); padding: 12px 20px; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600; color: var(--gh-text); }
+.gh-form-body { padding: 24px; }
+.gh-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 0; }
+@media(max-width:640px) { .gh-form-row { grid-template-columns: 1fr; } }
+.gh-form-group { margin-bottom: 16px; }
+.gh-label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+.gh-required { color: var(--gh-red); }
+
+/* ─── Inputs ─────────────────────────────────────────────── */
+.gh-input-wrap { position: relative; }
+.gh-input {
+  width: 100%; background: var(--gh-bg); border: 1px solid var(--gh-border);
+  border-radius: var(--gh-radius); color: var(--gh-text); padding: 7px 36px 7px 12px;
+  font-size: 14px; font-family: var(--gh-font); line-height: 20px;
+  transition: var(--t); outline: none;
+}
+.gh-input:focus { border-color: var(--gh-blue); box-shadow: 0 0 0 3px rgba(9,105,218,0.15); }
+.gh-input::placeholder { color: var(--gh-text-3); }
+.gh-input.is-valid { border-color: var(--gh-green); padding-right: 36px; }
+.gh-input.is-error { border-color: var(--gh-red); background: rgba(207,34,46,0.03); }
+.gh-input.is-valid:focus { box-shadow: 0 0 0 3px rgba(26,127,55,0.15); }
+.gh-input.is-error:focus { box-shadow: 0 0 0 3px rgba(207,34,46,0.15); }
+
+.gh-input-icon { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); font-size: 14px; pointer-events: none; }
+.icon-valid { color: var(--gh-green); }
+.icon-error { color: var(--gh-red); }
+
+.gh-eye-btn { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: var(--gh-text-3); padding: 4px; line-height: 1; }
+.gh-eye-btn:hover { color: var(--gh-text); }
+
+/* ─── Field Messages ─────────────────────────────────────── */
+.gh-field-msg { min-height: 20px; margin-top: 4px; font-size: 12px; }
+.msg-error { color: var(--gh-red); display: flex; align-items: center; gap: 4px; animation: fadeIn 0.2s ease; }
+.msg-success { color: var(--gh-green); display: flex; align-items: center; gap: 4px; animation: fadeIn 0.2s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ─── Password Strength Bar ──────────────────────────────── */
+.gh-strength-bar { height: 4px; background: var(--gh-bg-3); border-radius: 2px; margin-top: 6px; overflow: hidden; }
+.gh-strength-fill { height: 100%; width: 0; border-radius: 2px; transition: width 0.3s ease, background 0.3s ease; }
+.strength-weak   { background: var(--gh-red); }
+.strength-fair   { background: var(--gh-orange); }
+.strength-good   { background: #2da44e; }
+.strength-strong { background: var(--gh-green); }
+
+/* ─── Checklist ──────────────────────────────────────────── */
+.gh-checklist {
+  background: var(--gh-bg-2); border: 1px solid var(--gh-border);
+  border-radius: var(--gh-radius); padding: 12px 16px; margin-bottom: 16px;
+}
+.gh-checklist-title { font-size: 12px; font-weight: 600; color: var(--gh-text-2); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+.gh-checklist ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; }
+.gh-checklist li { font-size: 13px; color: var(--gh-text-3); display: flex; align-items: center; gap: 6px; transition: var(--t); }
+.gh-checklist li.pass { color: var(--gh-green); }
+.gh-checklist li.pass i::before { content: "\f633"; }
+
+/* ─── Form Actions ───────────────────────────────────────── */
+.gh-form-actions { display: flex; justify-content: flex-end; gap: 8px; padding-top: 16px; border-top: 1px solid var(--gh-border); margin-top: 8px; }
+
+/* ─── Alert ──────────────────────────────────────────────── */
+.gh-alert { display: flex; align-items: flex-start; gap: 10px; padding: 12px 16px; border-radius: var(--gh-radius); border-left: 4px solid; font-size: 14px; }
+.gh-alert.error { background: rgba(207,34,46,0.06); border-color: var(--gh-red); }
+.gh-alert-body { color: var(--gh-text); line-height: 1.5; }
+.gh-alert-body strong { display: block; margin-bottom: 2px; }
+
+/* ─── Action Bar ─────────────────────────────────────────── */
+.gh-action-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.gh-user-count { font-size: 14px; color: var(--gh-text-2); display: flex; align-items: center; gap: 6px; }
+
+/* ─── Table ──────────────────────────────────────────────── */
+.gh-table-wrapper { border: 1px solid var(--gh-border); border-radius: var(--gh-radius-lg); overflow: hidden; }
+.gh-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.gh-table thead { background: var(--gh-bg-2); }
+.gh-table th { padding: 10px 16px; text-align: left; font-weight: 600; color: var(--gh-text-2); font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid var(--gh-border); }
+.gh-table td { padding: 12px 16px; border-bottom: 1px solid var(--gh-border); vertical-align: middle; }
+.gh-table tbody tr:last-child td { border-bottom: none; }
+.gh-table tbody tr:hover { background: var(--gh-bg-2); }
+.gh-td-muted { color: var(--gh-text-3); }
+.gh-td-mono { font-family: var(--gh-mono); font-size: 13px; }
+.gh-link { color: var(--gh-blue); text-decoration: none; }
+.gh-link:hover { text-decoration: underline; }
+.gh-user-cell { display: flex; align-items: center; gap: 10px; }
+.gh-avatar { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #0969da, #8250df); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+.gh-user-name { font-weight: 500; }
+
+/* ─── Empty State ────────────────────────────────────────── */
+.gh-empty-state { text-align: center; padding: 60px 20px; border: 1px solid var(--gh-border); border-radius: var(--gh-radius-lg); background: var(--gh-bg-2); }
+.gh-empty-icon { font-size: 48px; color: var(--gh-text-3); display: block; margin-bottom: 16px; }
+.gh-empty-state h3 { font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+.gh-empty-state p { color: var(--gh-text-2); }
+.mt-3 { margin-top: 12px; }
+.mt-4 { margin-top: 16px; }
+
+/* ─── Footer ─────────────────────────────────────────────── */
+.gh-footer { background: var(--gh-bg-2); border-top: 1px solid var(--gh-border); padding: 32px 0; }
+.gh-footer-logo { display: flex; align-items: center; justify-content: center; gap: 8px; color: var(--gh-text-2); font-size: 13px; margin-bottom: 12px; }
+.gh-footer-logo svg { fill: var(--gh-text-3); }
+.gh-footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; margin-bottom: 12px; }
+.gh-footer-link { color: var(--gh-blue); font-size: 12px; text-decoration: none; }
+.gh-footer-link:hover { text-decoration: underline; }
+.gh-footer-copy { text-align: center; font-size: 12px; color: var(--gh-text-3); }
+
+@media(max-width:768px) {
+  .gh-nav-links { display: none; }
+  .gh-checklist ul { grid-template-columns: 1fr; }
+}

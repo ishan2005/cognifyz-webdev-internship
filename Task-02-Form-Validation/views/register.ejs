@@ -1,0 +1,186 @@
+<%- include('partials/header') %>
+
+<main class="gh-main">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8 col-xl-7">
+
+        <!-- Page Header -->
+        <div class="gh-page-header">
+          <div class="gh-section-label">Task 02 — Form Validation</div>
+          <h1 class="gh-page-title">Create your account</h1>
+          <p class="gh-page-desc">
+            Demonstrates <strong>real-time client-side validation</strong> and
+            <strong>server-side validation</strong> with an in-memory Map store.
+          </p>
+        </div>
+
+        <!-- Validation Info Banner -->
+        <div class="gh-info-banner">
+          <i class="bi bi-info-circle-fill"></i>
+          <div>
+            <strong>What this task covers:</strong>
+            Inline JS validation fires on every keystroke. Server also re-validates before storing.
+            Data is kept in a <code>Map</code> (no DB yet — that's Task 06).
+          </div>
+        </div>
+
+        <!-- Registration Form -->
+        <div class="gh-form-wrapper">
+          <div class="gh-form-header">
+            <i class="bi bi-person-plus-fill" style="color:var(--gh-green)"></i>
+            New Account
+            <span class="ms-auto" style="font-size:12px;color:var(--gh-text-3);font-weight:400">
+              Required fields marked <span style="color:var(--gh-red)">*</span>
+            </span>
+          </div>
+
+          <div class="gh-form-body">
+            <form id="registerForm" action="/register" method="POST" novalidate>
+
+              <!-- Row 1: Name + Email -->
+              <div class="gh-form-row">
+                <div class="gh-form-group">
+                  <label class="gh-label" for="name">Full Name <span class="gh-required">*</span></label>
+                  <div class="gh-input-wrap">
+                    <input type="text" id="name" name="name"
+                      class="gh-input <%= errors.name ? 'is-error' : (old.name ? 'is-valid' : '') %>"
+                      value="<%= old.name || '' %>"
+                      placeholder="Ishan Agrawal"
+                      autocomplete="name" />
+                    <span class="gh-input-icon" id="nameIcon"></span>
+                  </div>
+                  <p class="gh-field-msg" id="nameMsg">
+                    <% if (errors.name) { %><span class="msg-error"><i class="bi bi-x-circle"></i> <%= errors.name %></span><% } %>
+                  </p>
+                </div>
+
+                <div class="gh-form-group">
+                  <label class="gh-label" for="email">Email Address <span class="gh-required">*</span></label>
+                  <div class="gh-input-wrap">
+                    <input type="email" id="email" name="email"
+                      class="gh-input <%= errors.email ? 'is-error' : (old.email ? 'is-valid' : '') %>"
+                      value="<%= old.email || '' %>"
+                      placeholder="you@example.com"
+                      autocomplete="email" />
+                    <span class="gh-input-icon" id="emailIcon"></span>
+                  </div>
+                  <p class="gh-field-msg" id="emailMsg">
+                    <% if (errors.email) { %><span class="msg-error"><i class="bi bi-x-circle"></i> <%= errors.email %></span><% } %>
+                  </p>
+                </div>
+              </div>
+
+              <!-- Row 2: Password + Confirm -->
+              <div class="gh-form-row">
+                <div class="gh-form-group">
+                  <label class="gh-label" for="password">Password <span class="gh-required">*</span></label>
+                  <div class="gh-input-wrap">
+                    <input type="password" id="password" name="password"
+                      class="gh-input <%= errors.password ? 'is-error' : '' %>"
+                      placeholder="Min 8 chars, 1 uppercase, 1 number"
+                      autocomplete="new-password" />
+                    <button type="button" class="gh-eye-btn" id="togglePass" tabindex="-1">
+                      <i class="bi bi-eye" id="eyeIcon"></i>
+                    </button>
+                  </div>
+                  <!-- Password strength bar -->
+                  <div class="gh-strength-bar" id="strengthBar">
+                    <div class="gh-strength-fill" id="strengthFill"></div>
+                  </div>
+                  <p class="gh-field-msg" id="passwordMsg">
+                    <% if (errors.password) { %><span class="msg-error"><i class="bi bi-x-circle"></i> <%= errors.password %></span><% } %>
+                  </p>
+                </div>
+
+                <div class="gh-form-group">
+                  <label class="gh-label" for="confirmPassword">Confirm Password <span class="gh-required">*</span></label>
+                  <div class="gh-input-wrap">
+                    <input type="password" id="confirmPassword" name="confirmPassword"
+                      class="gh-input <%= errors.confirmPassword ? 'is-error' : '' %>"
+                      placeholder="Re-enter your password"
+                      autocomplete="new-password" />
+                    <span class="gh-input-icon" id="confirmIcon"></span>
+                  </div>
+                  <p class="gh-field-msg" id="confirmMsg">
+                    <% if (errors.confirmPassword) { %><span class="msg-error"><i class="bi bi-x-circle"></i> <%= errors.confirmPassword %></span><% } %>
+                  </p>
+                </div>
+              </div>
+
+              <!-- Row 3: Phone + DOB -->
+              <div class="gh-form-row">
+                <div class="gh-form-group">
+                  <label class="gh-label" for="phone">Phone Number <span class="gh-required">*</span></label>
+                  <div class="gh-input-wrap">
+                    <input type="tel" id="phone" name="phone"
+                      class="gh-input <%= errors.phone ? 'is-error' : (old.phone ? 'is-valid' : '') %>"
+                      value="<%= old.phone || '' %>"
+                      placeholder="9876543210"
+                      maxlength="10" />
+                    <span class="gh-input-icon" id="phoneIcon"></span>
+                  </div>
+                  <p class="gh-field-msg" id="phoneMsg">
+                    <% if (errors.phone) { %><span class="msg-error"><i class="bi bi-x-circle"></i> <%= errors.phone %></span><% } %>
+                    <% if (!errors.phone) { %><span style="color:var(--gh-text-3);font-size:12px">10-digit Indian mobile number</span><% } %>
+                  </p>
+                </div>
+
+                <div class="gh-form-group">
+                  <label class="gh-label" for="dob">Date of Birth <span class="gh-required">*</span></label>
+                  <div class="gh-input-wrap">
+                    <input type="date" id="dob" name="dob"
+                      class="gh-input <%= errors.dob ? 'is-error' : (old.dob ? 'is-valid' : '') %>"
+                      value="<%= old.dob || '' %>"
+                      max="<%= new Date(new Date().setFullYear(new Date().getFullYear()-18)).toISOString().split('T')[0] %>" />
+                    <span class="gh-input-icon" id="dobIcon"></span>
+                  </div>
+                  <p class="gh-field-msg" id="dobMsg">
+                    <% if (errors.dob) { %><span class="msg-error"><i class="bi bi-x-circle"></i> <%= errors.dob %></span><% } %>
+                    <% if (!errors.dob) { %><span style="color:var(--gh-text-3);font-size:12px">Must be 18 years or older</span><% } %>
+                  </p>
+                </div>
+              </div>
+
+              <!-- Validation checklist -->
+              <div class="gh-checklist" id="checkList">
+                <p class="gh-checklist-title">Password requirements</p>
+                <ul>
+                  <li id="chk-len"><i class="bi bi-circle"></i> At least 8 characters</li>
+                  <li id="chk-upper"><i class="bi bi-circle"></i> One uppercase letter</li>
+                  <li id="chk-num"><i class="bi bi-circle"></i> One number</li>
+                  <li id="chk-match"><i class="bi bi-circle"></i> Passwords match</li>
+                </ul>
+              </div>
+
+              <!-- Submit row -->
+              <div class="gh-form-actions">
+                <a href="/users" class="gh-btn gh-btn-default">
+                  <i class="bi bi-people"></i> View Users
+                </a>
+                <button type="submit" class="gh-btn gh-btn-primary" id="submitBtn">
+                  <i class="bi bi-person-check-fill"></i> Create Account
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
+
+        <!-- Server validation errors summary (if any) -->
+        <% if (Object.keys(errors).length > 0) { %>
+          <div class="gh-alert error mt-3">
+            <i class="bi bi-exclamation-triangle-fill" style="font-size:18px;flex-shrink:0"></i>
+            <div class="gh-alert-body">
+              <strong>Please fix <%= Object.keys(errors).length %> error(s) before continuing.</strong>
+              Server-side validation caught issues — check the fields highlighted above.
+            </div>
+          </div>
+        <% } %>
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('partials/footer') %>
