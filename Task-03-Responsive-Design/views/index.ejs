@@ -1,0 +1,290 @@
+<%- include('partials/header') %>
+
+<!-- ─── HERO ──────────────────────────────────────────────────── -->
+<section class="dv-hero d-flex align-items-center" id="home">
+  <div class="dv-hero-orb orb-1"></div>
+  <div class="dv-hero-orb orb-2"></div>
+  <div class="container position-relative">
+    <div class="row align-items-center min-vh-100 py-5">
+      <div class="col-lg-6 order-2 order-lg-1">
+        <div class="dv-eyebrow reveal">
+          <i class="bi bi-mortarboard-fill me-1"></i> Cognifyz Internship · Task 03 of 08
+        </div>
+        <h1 class="dv-hero-title reveal">
+          Design that <span class="dv-gradient-text">Responds.</span><br/>
+          Animations that <span class="dv-gradient-text">Impress.</span>
+        </h1>
+        <p class="dv-hero-sub reveal">
+          A deep-dive into <strong>Bootstrap 5</strong>, <strong>CSS custom properties</strong>,
+          scroll-triggered animations, glassmorphism, and fully responsive layouts.
+        </p>
+        <div class="d-flex flex-wrap gap-3 reveal">
+          <a href="#features" class="btn dv-btn-primary btn-lg">
+            <i class="bi bi-grid-3x3-gap-fill me-2"></i>Explore Features
+          </a>
+          <a href="#glass" class="btn dv-btn-ghost btn-lg">
+            <i class="bi bi-layers me-2"></i>Glassmorphism
+          </a>
+        </div>
+        <!-- Tech Pills -->
+        <div class="dv-tech-pills mt-4 reveal">
+          <span class="dv-pill"><i class="bi bi-bootstrap me-1"></i>Bootstrap 5</span>
+          <span class="dv-pill"><i class="bi bi-braces me-1"></i>CSS Variables</span>
+          <span class="dv-pill"><i class="bi bi-play-circle me-1"></i>@keyframes</span>
+          <span class="dv-pill"><i class="bi bi-phone me-1"></i>Responsive</span>
+        </div>
+      </div>
+      <div class="col-lg-6 order-1 order-lg-2 d-flex justify-content-center mb-5 mb-lg-0">
+        <!-- Animated CSS showcase card -->
+        <div class="dv-showcase-card reveal">
+          <div class="dv-card-inner">
+            <div class="dv-card-line"><span class="css-sel">.hero</span> {</div>
+            <div class="dv-card-line"><span class="css-prop">  background</span>: <span class="css-val">linear-gradient(135deg,</span></div>
+            <div class="dv-card-line"><span class="css-val">    #667eea, #764ba2</span>);</div>
+            <div class="dv-card-line"><span class="css-prop">  animation</span>: <span class="css-val">float 6s ease</span></div>
+            <div class="dv-card-line"><span class="css-val">             infinite</span>;</div>
+            <div class="dv-card-line"><span class="css-prop">  backdrop-filter</span>: <span class="css-val">blur(20px)</span>;</div>
+            <div class="dv-card-line"><span class="css-prop">  border-radius</span>: <span class="css-num">24px</span>;</div>
+            <div class="dv-card-line">}</div>
+          </div>
+          <!-- Floating decorative elements -->
+          <div class="dv-float-chip chip-1">Mobile First 📱</div>
+          <div class="dv-float-chip chip-2">60fps ⚡</div>
+          <div class="dv-float-chip chip-3">Accessible ♿</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── STATS BAR ─────────────────────────────────────────────── -->
+<section class="dv-stats-bar">
+  <div class="container">
+    <div class="row g-4 text-center">
+      <% stats.forEach(s => { %>
+      <div class="col-6 col-md-3">
+        <div class="dv-stat reveal">
+          <div class="dv-stat-val dv-counter" data-target="<%= s.value %>" data-suffix="<%= s.suffix %>">0</div>
+          <div class="dv-stat-lbl"><%= s.label %></div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FEATURES GRID ─────────────────────────────────────────── -->
+<section class="dv-section" id="features">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="dv-section-label">Bootstrap 5 Grid</div>
+      <h2 class="dv-section-title">Design Concepts</h2>
+      <p class="dv-section-sub">6 core responsive design concepts demonstrated in this task</p>
+    </div>
+    <div class="row g-4">
+      <% features.forEach((f, i) => { %>
+      <div class="col-sm-6 col-lg-4">
+        <div class="dv-feature-card reveal" style="animation-delay: <%= i * 80 %>ms">
+          <div class="dv-feature-icon dv-color-<%= f.color %>">
+            <i class="bi <%= f.icon %>"></i>
+          </div>
+          <h5 class="dv-feature-title"><%= f.title %></h5>
+          <p class="dv-feature-desc"><%= f.desc %></p>
+          <div class="dv-feature-hover-bar dv-bg-<%= f.color %>"></div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CSS ANIMATIONS SHOWCASE ───────────────────────────────── -->
+<section class="dv-section dv-section-alt" id="animations">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="dv-section-label">CSS Animations</div>
+      <h2 class="dv-section-title">@keyframes in Action</h2>
+      <p class="dv-section-sub">Hover over each card to trigger the animation</p>
+    </div>
+    <div class="row g-4">
+
+      <div class="col-sm-6 col-lg-3">
+        <div class="dv-anim-card reveal anim-pulse">
+          <i class="bi bi-heart-fill dv-anim-icon"></i>
+          <h6>Pulse</h6>
+          <p>scale + opacity loop</p>
+          <code>animation: pulse 1.5s infinite</code>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-lg-3">
+        <div class="dv-anim-card reveal anim-bounce">
+          <i class="bi bi-arrow-down-circle-fill dv-anim-icon"></i>
+          <h6>Bounce</h6>
+          <p>translateY with easing</p>
+          <code>animation: bounce 1s infinite</code>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-lg-3">
+        <div class="dv-anim-card reveal anim-spin">
+          <i class="bi bi-arrow-repeat dv-anim-icon"></i>
+          <h6>Spin</h6>
+          <p>rotate 360° loop</p>
+          <code>animation: spin 2s linear infinite</code>
+        </div>
+      </div>
+
+      <div class="col-sm-6 col-lg-3">
+        <div class="dv-anim-card reveal anim-shake">
+          <i class="bi bi-bell-fill dv-anim-icon"></i>
+          <h6>Shake</h6>
+          <p>translateX back-and-forth</p>
+          <code>animation: shake 0.5s ease</code>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Progress bars with CSS animation -->
+    <div class="dv-progress-section mt-5 reveal">
+      <h5 class="mb-3"><i class="bi bi-bar-chart-fill me-2" style="color:var(--dv-accent)"></i>CSS Transition Progress Bars</h5>
+      <% [['Bootstrap 5', 95,'blue'],['CSS Animations', 88,'purple'],['Responsive Design', 92,'green'],['Glassmorphism', 78,'pink']].forEach(([label, pct, color]) => { %>
+      <div class="dv-progress-wrap mb-3">
+        <div class="d-flex justify-content-between mb-1">
+          <span class="dv-progress-label"><%= label %></span>
+          <span class="dv-progress-pct"><%= pct %>%</span>
+        </div>
+        <div class="dv-progress-track">
+          <div class="dv-progress-fill dv-prog-<%= color %> reveal-bar" data-width="<%= pct %>"></div>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<!-- ─── GLASSMORPHISM SECTION ─────────────────────────────────── -->
+<section class="dv-glass-section" id="glass">
+  <div class="dv-glass-bg"></div>
+  <div class="container position-relative">
+    <div class="text-center mb-5 reveal">
+      <div class="dv-section-label">backdrop-filter: blur()</div>
+      <h2 class="dv-section-title">Glassmorphism Cards</h2>
+      <p class="dv-section-sub">Frosted-glass effect using CSS backdrop-filter</p>
+    </div>
+    <div class="row g-4 justify-content-center">
+
+      <div class="col-md-6 col-lg-4">
+        <div class="dv-glass-card reveal">
+          <div class="dv-glass-icon" style="background:rgba(88,101,242,0.3)"><i class="bi bi-shield-lock-fill"></i></div>
+          <h5>Secure Vault</h5>
+          <p>End-to-end encrypted data storage with JWT authentication and bcrypt hashing.</p>
+          <div class="dv-glass-footer">
+            <span class="dv-glass-tag">Task 06</span>
+            <span class="dv-glass-tag">MongoDB</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="dv-glass-card reveal" style="animation-delay:100ms">
+          <div class="dv-glass-icon" style="background:rgba(63,185,80,0.3)"><i class="bi bi-cloud-sun-fill"></i></div>
+          <h5>Weather Widget</h5>
+          <p>Live weather data fetched from OpenWeatherMap API with intelligent caching.</p>
+          <div class="dv-glass-footer">
+            <span class="dv-glass-tag">Task 07</span>
+            <span class="dv-glass-tag">REST API</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4">
+        <div class="dv-glass-card reveal" style="animation-delay:200ms">
+          <div class="dv-glass-icon" style="background:rgba(188,140,255,0.3)"><i class="bi bi-gear-wide-connected"></i></div>
+          <h5>Background Jobs</h5>
+          <p>Scheduled node-cron tasks, morgan request logging, and node-cache performance layer.</p>
+          <div class="dv-glass-footer">
+            <span class="dv-glass-tag">Task 08</span>
+            <span class="dv-glass-tag">node-cron</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── RESPONSIVE BREAKPOINTS ────────────────────────────────── -->
+<section class="dv-section" id="responsive">
+  <div class="container">
+    <div class="text-center mb-5 reveal">
+      <div class="dv-section-label">Media Queries</div>
+      <h2 class="dv-section-title">Bootstrap 5 Breakpoints</h2>
+      <p class="dv-section-sub">Resize your browser to see the grid adapt live</p>
+    </div>
+
+    <!-- Live Breakpoint Indicator -->
+    <div class="dv-bp-indicator reveal">
+      <span class="dv-bp d-block d-sm-none">📱 xs — &lt;576px</span>
+      <span class="dv-bp d-none d-sm-block d-md-none">📱 sm — ≥576px</span>
+      <span class="dv-bp d-none d-md-block d-lg-none">💻 md — ≥768px</span>
+      <span class="dv-bp d-none d-lg-block d-xl-none">🖥️ lg — ≥992px</span>
+      <span class="dv-bp d-none d-xl-block d-xxl-none">🖥️ xl — ≥1200px</span>
+      <span class="dv-bp d-none d-xxl-block">🖥️ xxl — ≥1400px</span>
+    </div>
+
+    <!-- Responsive grid demo -->
+    <div class="row g-3 mt-4 reveal">
+      <% ['col-12 col-sm-6 col-md-4 col-lg-3', 'col-12 col-sm-6 col-md-4 col-lg-3', 'col-12 col-sm-6 col-md-4 col-lg-3', 'col-12 col-sm-6 col-md-12 col-lg-3'].forEach((cls, i) => { %>
+      <div class="<%= cls %>">
+        <div class="dv-grid-cell">
+          <code><%= cls.replace(/col-/g,'').replace(/ /g,'\n') %></code>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+
+    <!-- Tech Stack Table (responsive) -->
+    <div class="dv-table-wrap mt-5 reveal">
+      <h5 class="mb-3"><i class="bi bi-stack me-2" style="color:var(--dv-accent)"></i>Tech Stack Used in This Task</h5>
+      <div class="table-responsive">
+        <table class="table dv-table">
+          <thead>
+            <tr>
+              <th>Technology</th>
+              <th>Category</th>
+              <th>Purpose</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% techStack.forEach(t => { %>
+            <tr>
+              <td><i class="bi <%= t.icon %> me-2" style="color:var(--dv-accent)"></i><strong><%= t.name %></strong></td>
+              <td><span class="dv-badge"><%= t.badge %></span></td>
+              <td class="text-muted">Demonstrated in this task</td>
+              <td><span class="dv-status-done"><i class="bi bi-check-circle-fill me-1"></i>Active</span></td>
+            </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
+
+<script>
+  // Animate progress bars on scroll
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.width = e.target.dataset.width + '%';
+        barObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.reveal-bar').forEach(b => barObserver.observe(b));
+</script>

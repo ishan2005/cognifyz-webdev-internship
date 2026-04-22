@@ -1,0 +1,60 @@
+<!-- ─── Footer ──────────────────────────────────────────────── -->
+<footer class="dv-footer">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-4 text-center text-md-start mb-3 mb-md-0">
+        <span class="dv-footer-brand"><i class="bi bi-database-fill-lock me-2"></i>DataVault</span>
+      </div>
+      <div class="col-md-4 text-center mb-3 mb-md-0">
+        <div class="dv-footer-links">
+          <a href="https://github.com/ishan2005/cognifyz-webdev-internship" target="_blank">GitHub</a>
+          <a href="https://linkedin.com/in/agrawalishan2005" target="_blank">LinkedIn</a>
+        </div>
+      </div>
+      <div class="col-md-4 text-center text-md-end">
+        <p class="dv-footer-copy mb-0">&copy; <%= new Date().getFullYear() %> Ishan Agrawal · Cognifyz Internship</p>
+      </div>
+    </div>
+    <hr class="dv-footer-divider"/>
+    <p class="text-center dv-footer-task mb-0">Task 03 — Bootstrap 5 · CSS Animations · Glassmorphism · Responsive Design</p>
+  </div>
+</footer>
+
+<!-- Bootstrap 5 JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Scroll animations + navbar scroll effect -->
+<script>
+  // Navbar scroll effect
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll-reveal: add .revealed when element enters viewport
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('revealed');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Counter animation
+  document.querySelectorAll('.dv-counter').forEach(el => {
+    const target = parseInt(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    let current = 0;
+    const step = Math.ceil(target / 50);
+    const timer = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = current + suffix;
+      if (current >= target) clearInterval(timer);
+    }, 30);
+  });
+</script>
+</body>
+</html>
