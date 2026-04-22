@@ -28,7 +28,7 @@ Each task is **self-contained in its own folder** with full source code, a detai
 |---|------|-------|----------|--------|-------|
 | 01 | [Server Setup & Landing Page](./Task-01-Server-Setup/) | 🟢 Beginner | Express, EJS, Routes, Forms | ✅ Done | [▶ Watch](https://linkedin.com) |
 | 02 | [Form Validation](./Task-02-Form-Validation/) | 🟢 Beginner | Client-side JS, Server validation | ✅ Done | [▶ Watch](https://linkedin.com) |
-| 03 | [Responsive UI Design](./Task-03-Responsive-Design/) | 🟡 Intermediate | Bootstrap 5, CSS Animations | ⏳ Coming Soon | — |
+| 03 | [Responsive UI Design](./Task-03-Responsive-Design/) | 🟡 Intermediate | Bootstrap 5, CSS Animations | ✅ Done | [▶ Watch](https://linkedin.com) |
 | 04 | [Advanced UI & Dynamic DOM](./Task-04-Advanced-UI/) | 🟡 Intermediate | Password Meter, Hash Routing, DOM | ⏳ Coming Soon | — |
 | 05 | [REST API — CRUD](./Task-05-REST-API/) | 🔴 Advanced | GET/POST/PUT/DELETE, Fetch API | ⏳ Coming Soon | — |
 | 06 | [Database & Authentication](./Task-06-Database-Auth/) | 🔴 Advanced | MongoDB, Mongoose, JWT, bcrypt | ⏳ Coming Soon | — |
