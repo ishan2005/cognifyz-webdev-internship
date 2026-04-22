@@ -1,256 +1,345 @@
 <%- include('partials/header') %>
 
-<!-- ─── Hero Section ──────────────────────────────────────────────────────────── -->
-<section class="hero-section d-flex align-items-center" id="home">
-  <div class="hero-bg-orb orb-1"></div>
-  <div class="hero-bg-orb orb-2"></div>
-  <div class="container position-relative">
-    <div class="row align-items-center min-vh-100">
-      <div class="col-lg-6 py-5">
-        <span class="badge-pill mb-4">
-          <i class="bi bi-stars me-1"></i> Cognifyz Internship · Task 01
-        </span>
-        <h1 class="hero-title mb-4">
-          Your Data.<br />
-          <span class="text-gradient">Secured.</span><br />
-          Organized.
+<!-- ─── HERO ──────────────────────────────────────────────────────────────── -->
+<section class="gh-hero">
+  <div class="container">
+    <div class="row align-items-center g-5">
+
+      <!-- Left -->
+      <div class="col-lg-6">
+        <div class="gh-hero-eyebrow">
+          <i class="bi bi-mortarboard-fill"></i>
+          Cognifyz Internship &nbsp;·&nbsp; Task 01 of 08
+        </div>
+        <h1 class="gh-hero-title">
+          Build. Ship.<br/>
+          <span class="highlight">Learn.</span>
         </h1>
-        <p class="hero-subtitle mb-5">
-          DataVault is a full-stack user management platform built with
-          <strong>Node.js</strong>, <strong>Express</strong>, and <strong>EJS</strong> —
-          progressively enhanced across 8 Cognifyz internship tasks.
+        <p class="gh-hero-desc">
+          <strong style="color:var(--gh-text)">DataVault</strong> is a full-stack web app
+          built task-by-task during the Cognifyz Web Dev Internship —
+          Node.js, Express, EJS, MongoDB, JWT and more.
         </p>
-        <div class="d-flex flex-wrap gap-3">
-          <a href="#features" class="btn btn-accent btn-lg px-5">
-            <i class="bi bi-rocket-takeoff me-2"></i>Explore Features
+        <div class="gh-btn-group">
+          <a href="#features" class="gh-btn gh-btn-primary gh-btn-lg">
+            <i class="bi bi-grid-3x3-gap-fill"></i> View All Tasks
           </a>
-          <a href="#contact" class="btn btn-ghost btn-lg px-5">
-            <i class="bi bi-envelope me-2"></i>Get in Touch
+          <a href="https://github.com/ishan2005/cognifyz-webdev-internship" target="_blank" class="gh-btn gh-btn-default gh-btn-lg">
+            <i class="bi bi-github"></i> GitHub Repo
           </a>
         </div>
-        <!-- Tech Stack Pills -->
-        <div class="tech-pills mt-5">
-          <span class="tech-pill"><i class="bi bi-filetype-js me-1"></i>Node.js</span>
-          <span class="tech-pill"><i class="bi bi-server me-1"></i>Express</span>
-          <span class="tech-pill"><i class="bi bi-file-earmark-code me-1"></i>EJS</span>
-          <span class="tech-pill"><i class="bi bi-bootstrap me-1"></i>Bootstrap 5</span>
+        <!-- Language chips -->
+        <div class="gh-chips">
+          <span class="gh-chip"><span class="gh-chip-dot js"></span>JavaScript</span>
+          <span class="gh-chip"><span class="gh-chip-dot ejs"></span>EJS</span>
+          <span class="gh-chip"><span class="gh-chip-dot css"></span>CSS</span>
+          <span class="gh-chip"><span class="gh-chip-dot shell"></span>Node.js</span>
+          <span class="gh-chip"><span class="gh-chip-dot ts"></span>MongoDB</span>
         </div>
       </div>
-      <div class="col-lg-6 d-none d-lg-flex justify-content-center">
-        <div class="hero-card glass-card">
-          <div class="hero-card-header">
-            <div class="dot red"></div>
-            <div class="dot yellow"></div>
-            <div class="dot green"></div>
-            <span class="ms-2 text-muted small">server.js</span>
+
+      <!-- Right: Code Window -->
+      <div class="col-lg-6 d-none d-lg-block">
+        <div class="gh-code-window">
+          <div class="gh-code-titlebar">
+            <div class="gh-dot r"></div>
+            <div class="gh-dot y"></div>
+            <div class="gh-dot g"></div>
+            <span class="gh-file-tab">server.js</span>
           </div>
-          <pre class="code-block"><code><span class="code-keyword">const</span> express = <span class="code-fn">require</span>(<span class="code-str">'express'</span>);
-<span class="code-keyword">const</span> app = <span class="code-fn">express</span>();
-
-app.<span class="code-fn">set</span>(<span class="code-str">'view engine'</span>, <span class="code-str">'ejs'</span>);
-
-app.<span class="code-fn">get</span>(<span class="code-str">'/'</span>, (req, res) => {
-  res.<span class="code-fn">render</span>(<span class="code-str">'index'</span>, {
-    title: <span class="code-str">'DataVault'</span>
-  });
-});
-
-app.<span class="code-fn">listen</span>(<span class="code-num">3000</span>, () => {
-  console.<span class="code-fn">log</span>(<span class="code-str">'🚀 Server running!'</span>);
-});</code></pre>
+          <div class="gh-code-body">
+            <div class="gh-line"><span class="gh-line-num">1</span><span class="tok-cm">// Task 01 — Express + EJS Setup</span></div>
+            <div class="gh-line"><span class="gh-line-num">2</span><span class="tok-kw">const</span> <span class="tok-val">express</span> = <span class="tok-fn">require</span>(<span class="tok-str">'express'</span>);</div>
+            <div class="gh-line"><span class="gh-line-num">3</span><span class="tok-kw">const</span> <span class="tok-val">app</span> = <span class="tok-fn">express</span>();</div>
+            <div class="gh-line"><span class="gh-line-num">4</span></div>
+            <div class="gh-line"><span class="gh-line-num">5</span><span class="tok-cm">// View Engine</span></div>
+            <div class="gh-line"><span class="gh-line-num">6</span><span class="tok-val">app</span>.<span class="tok-fn">set</span>(<span class="tok-str">'view engine'</span>, <span class="tok-str">'ejs'</span>);</div>
+            <div class="gh-line"><span class="gh-line-num">7</span><span class="tok-val">app</span>.<span class="tok-fn">use</span>(<span class="tok-val">express</span>.<span class="tok-fn">static</span>(<span class="tok-str">'public'</span>));</div>
+            <div class="gh-line"><span class="gh-line-num">8</span></div>
+            <div class="gh-line"><span class="gh-line-num">9</span><span class="tok-cm">// Routes</span></div>
+            <div class="gh-line"><span class="gh-line-num">10</span><span class="tok-val">app</span>.<span class="tok-fn">get</span>(<span class="tok-str">'/'</span>, (req, res) => {</div>
+            <div class="gh-line"><span class="gh-line-num">11</span>&nbsp;&nbsp;res.<span class="tok-fn">render</span>(<span class="tok-str">'index'</span>, {</div>
+            <div class="gh-line"><span class="gh-line-num">12</span>&nbsp;&nbsp;&nbsp;&nbsp;title: <span class="tok-str">'DataVault'</span></div>
+            <div class="gh-line"><span class="gh-line-num">13</span>&nbsp;&nbsp;});</div>
+            <div class="gh-line"><span class="gh-line-num">14</span>});</div>
+            <div class="gh-line"><span class="gh-line-num">15</span></div>
+            <div class="gh-line"><span class="gh-line-num">16</span><span class="tok-val">app</span>.<span class="tok-fn">listen</span>(<span class="tok-num">3000</span>);</div>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
 </section>
 
-<!-- ─── Stats Bar ─────────────────────────────────────────────────────────────── -->
-<section class="stats-bar py-4">
+<!-- ─── STATS ROW ─────────────────────────────────────────────────────────── -->
+<div class="gh-stats-row">
   <div class="container">
-    <div class="row text-center g-4">
+    <div class="row g-3">
       <div class="col-6 col-md-3">
-        <div class="stat-item">
-          <h3 class="stat-number text-gradient">8</h3>
-          <p class="stat-label">Total Tasks</p>
+        <div class="gh-stat">
+          <div class="gh-stat-val">8</div>
+          <div class="gh-stat-lbl">Total Tasks</div>
         </div>
       </div>
       <div class="col-6 col-md-3">
-        <div class="stat-item">
-          <h3 class="stat-number text-gradient">4</h3>
-          <p class="stat-label">Skill Levels</p>
+        <div class="gh-stat">
+          <div class="gh-stat-val">4</div>
+          <div class="gh-stat-lbl">Skill Levels</div>
         </div>
       </div>
       <div class="col-6 col-md-3">
-        <div class="stat-item">
-          <h3 class="stat-number text-gradient">10+</h3>
-          <p class="stat-label">Technologies</p>
+        <div class="gh-stat">
+          <div class="gh-stat-val">10+</div>
+          <div class="gh-stat-lbl">Technologies</div>
         </div>
       </div>
       <div class="col-6 col-md-3">
-        <div class="stat-item">
-          <h3 class="stat-number text-gradient">1</h3>
-          <p class="stat-label">Cohesive App</p>
+        <div class="gh-stat">
+          <div class="gh-stat-val">1</div>
+          <div class="gh-stat-lbl">Cohesive App</div>
         </div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ─── Features Section ──────────────────────────────────────────────────────── -->
-<section class="features-section py-6" id="features">
+<!-- ─── CONTRIBUTION GRAPH ───────────────────────────────────────────────── -->
+<div class="gh-contrib-bar">
   <div class="container">
-    <div class="text-center mb-5">
-      <span class="badge-pill mb-3"><i class="bi bi-grid-3x3-gap me-1"></i>All 8 Tasks</span>
-      <h2 class="section-title">Built Task by Task</h2>
-      <p class="section-subtitle">Each task adds a new layer of functionality to DataVault</p>
-    </div>
-    <div class="row g-4">
+    <p style="font-size:12px;color:var(--gh-text-2);margin-bottom:10px;text-align:center;">
+      <i class="bi bi-graph-up me-1" style="color:var(--gh-green)"></i>
+      Task completion activity
+    </p>
+    <div class="gh-contrib-grid" id="contribGrid"></div>
+  </div>
+</div>
 
-      <!-- Task 01 -->
+<!-- ─── TASKS / FEATURES ──────────────────────────────────────────────────── -->
+<section class="gh-tasks-section" id="features">
+  <div class="container">
+    <div class="mb-5">
+      <div class="gh-section-label">All 8 Tasks</div>
+      <h2 class="gh-section-title">Internship Roadmap</h2>
+      <p class="gh-section-desc">Each folder is a self-contained task with full source code and a LinkedIn video.</p>
+    </div>
+
+    <div class="row g-3">
+
+      <!-- Task 01 — Active -->
       <div class="col-md-6 col-lg-3">
-        <div class="feature-card active-task">
-          <div class="task-badge">Task 01</div>
-          <div class="feature-icon"><i class="bi bi-server"></i></div>
-          <h5 class="feature-title">Server Setup</h5>
-          <p class="feature-desc">Express + EJS server with routing and EJS partials.</p>
-          <span class="status-done"><i class="bi bi-check-circle-fill me-1"></i>Done</span>
+        <div class="gh-repo-card active">
+          <div class="gh-repo-header">
+            <i class="bi bi-book-fill gh-repo-icon" style="color:var(--gh-blue)"></i>
+            <span class="gh-repo-badge badge-active">Public</span>
+          </div>
+          <div class="gh-repo-name">Task-01-Server-Setup</div>
+          <p class="gh-repo-desc">Express + EJS server with routes, partials, and a fully rendered landing page.</p>
+          <div class="gh-repo-footer">
+            <span class="gh-lang-label">
+              <span class="gh-lang-dot" style="background:#f1e05a"></span> JavaScript
+            </span>
+            <span class="status-pill pill-done">Done</span>
+          </div>
         </div>
       </div>
 
       <!-- Task 02 -->
       <div class="col-md-6 col-lg-3">
-        <div class="feature-card">
-          <div class="task-badge upcoming">Task 02</div>
-          <div class="feature-icon"><i class="bi bi-ui-checks"></i></div>
-          <h5 class="feature-title">Form Validation</h5>
-          <p class="feature-desc">Client-side JS + server-side validation with temp store.</p>
-          <span class="status-soon"><i class="bi bi-clock me-1"></i>Coming Soon</span>
+        <div class="gh-repo-card">
+          <div class="gh-repo-header">
+            <i class="bi bi-book gh-repo-icon"></i>
+            <span class="gh-repo-badge badge-soon">Soon</span>
+          </div>
+          <div class="gh-repo-name inactive">Task-02-Form-Validation</div>
+          <p class="gh-repo-desc">Client-side JS validation + server-side checks with a temp in-memory store.</p>
+          <div class="gh-repo-footer">
+            <span class="gh-lang-label">
+              <span class="gh-lang-dot" style="background:#f1e05a"></span> JavaScript
+            </span>
+            <span class="status-pill pill-soon">Pending</span>
+          </div>
         </div>
       </div>
 
       <!-- Task 03 -->
       <div class="col-md-6 col-lg-3">
-        <div class="feature-card">
-          <div class="task-badge upcoming">Task 03</div>
-          <div class="feature-icon"><i class="bi bi-phone"></i></div>
-          <h5 class="feature-title">Responsive Design</h5>
-          <p class="feature-desc">Bootstrap 5 + CSS animations and glassmorphism.</p>
-          <span class="status-soon"><i class="bi bi-clock me-1"></i>Coming Soon</span>
+        <div class="gh-repo-card">
+          <div class="gh-repo-header">
+            <i class="bi bi-book gh-repo-icon"></i>
+            <span class="gh-repo-badge badge-soon">Soon</span>
+          </div>
+          <div class="gh-repo-name inactive">Task-03-Responsive-Design</div>
+          <p class="gh-repo-desc">Bootstrap 5 grid, CSS animations, glassmorphism, fully responsive layout.</p>
+          <div class="gh-repo-footer">
+            <span class="gh-lang-label">
+              <span class="gh-lang-dot" style="background:#563d7c"></span> CSS
+            </span>
+            <span class="status-pill pill-soon">Pending</span>
+          </div>
         </div>
       </div>
 
       <!-- Task 04 -->
       <div class="col-md-6 col-lg-3">
-        <div class="feature-card">
-          <div class="task-badge upcoming">Task 04</div>
-          <div class="feature-icon"><i class="bi bi-sliders"></i></div>
-          <h5 class="feature-title">Advanced UI</h5>
-          <p class="feature-desc">Password meter, dynamic DOM, hash-based routing.</p>
-          <span class="status-soon"><i class="bi bi-clock me-1"></i>Coming Soon</span>
+        <div class="gh-repo-card">
+          <div class="gh-repo-header">
+            <i class="bi bi-book gh-repo-icon"></i>
+            <span class="gh-repo-badge badge-soon">Soon</span>
+          </div>
+          <div class="gh-repo-name inactive">Task-04-Advanced-UI</div>
+          <p class="gh-repo-desc">Password strength meter, dynamic DOM updates, and hash-based routing.</p>
+          <div class="gh-repo-footer">
+            <span class="gh-lang-label">
+              <span class="gh-lang-dot" style="background:#f1e05a"></span> JavaScript
+            </span>
+            <span class="status-pill pill-soon">Pending</span>
+          </div>
         </div>
       </div>
 
       <!-- Task 05 -->
       <div class="col-md-6 col-lg-3">
-        <div class="feature-card">
-          <div class="task-badge upcoming">Task 05</div>
-          <div class="feature-icon"><i class="bi bi-cloud-arrow-up"></i></div>
-          <h5 class="feature-title">REST API</h5>
-          <p class="feature-desc">Full CRUD endpoints — GET, POST, PUT, DELETE.</p>
-          <span class="status-soon"><i class="bi bi-clock me-1"></i>Coming Soon</span>
+        <div class="gh-repo-card">
+          <div class="gh-repo-header">
+            <i class="bi bi-book gh-repo-icon"></i>
+            <span class="gh-repo-badge badge-soon">Soon</span>
+          </div>
+          <div class="gh-repo-name inactive">Task-05-REST-API</div>
+          <p class="gh-repo-desc">Full CRUD REST API — GET, POST, PUT, DELETE with Fetch API on client side.</p>
+          <div class="gh-repo-footer">
+            <span class="gh-lang-label">
+              <span class="gh-lang-dot" style="background:#f1e05a"></span> JavaScript
+            </span>
+            <span class="status-pill pill-soon">Pending</span>
+          </div>
         </div>
       </div>
 
       <!-- Task 06 -->
       <div class="col-md-6 col-lg-3">
-        <div class="feature-card">
-          <div class="task-badge upcoming">Task 06</div>
-          <div class="feature-icon"><i class="bi bi-shield-lock"></i></div>
-          <h5 class="feature-title">Auth & Database</h5>
-          <p class="feature-desc">MongoDB, Mongoose, JWT authentication, bcrypt.</p>
-          <span class="status-soon"><i class="bi bi-clock me-1"></i>Coming Soon</span>
+        <div class="gh-repo-card">
+          <div class="gh-repo-header">
+            <i class="bi bi-book gh-repo-icon"></i>
+            <span class="gh-repo-badge badge-soon">Soon</span>
+          </div>
+          <div class="gh-repo-name inactive">Task-06-Database-Auth</div>
+          <p class="gh-repo-desc">MongoDB + Mongoose, bcrypt password hashing, JWT authentication.</p>
+          <div class="gh-repo-footer">
+            <span class="gh-lang-label">
+              <span class="gh-lang-dot" style="background:#89e051"></span> Shell
+            </span>
+            <span class="status-pill pill-soon">Pending</span>
+          </div>
         </div>
       </div>
 
       <!-- Task 07 -->
       <div class="col-md-6 col-lg-3">
-        <div class="feature-card">
-          <div class="task-badge upcoming">Task 07</div>
-          <div class="feature-icon"><i class="bi bi-cloud-sun"></i></div>
-          <h5 class="feature-title">External API</h5>
-          <p class="feature-desc">OpenWeatherMap integration + rate limiting.</p>
-          <span class="status-soon"><i class="bi bi-clock me-1"></i>Coming Soon</span>
+        <div class="gh-repo-card">
+          <div class="gh-repo-header">
+            <i class="bi bi-book gh-repo-icon"></i>
+            <span class="gh-repo-badge badge-soon">Soon</span>
+          </div>
+          <div class="gh-repo-name inactive">Task-07-External-API</div>
+          <p class="gh-repo-desc">OpenWeatherMap integration, express-rate-limit, API key security.</p>
+          <div class="gh-repo-footer">
+            <span class="gh-lang-label">
+              <span class="gh-lang-dot" style="background:#f1e05a"></span> JavaScript
+            </span>
+            <span class="status-pill pill-soon">Pending</span>
+          </div>
         </div>
       </div>
 
       <!-- Task 08 -->
       <div class="col-md-6 col-lg-3">
-        <div class="feature-card">
-          <div class="task-badge upcoming">Task 08</div>
-          <div class="feature-icon"><i class="bi bi-gear-wide-connected"></i></div>
-          <h5 class="feature-title">Server Features</h5>
-          <p class="feature-desc">morgan logging, node-cache, node-cron jobs.</p>
-          <span class="status-soon"><i class="bi bi-clock me-1"></i>Coming Soon</span>
+        <div class="gh-repo-card">
+          <div class="gh-repo-header">
+            <i class="bi bi-book gh-repo-icon"></i>
+            <span class="gh-repo-badge badge-soon">Soon</span>
+          </div>
+          <div class="gh-repo-name inactive">Task-08-Server-Features</div>
+          <p class="gh-repo-desc">morgan logging, node-cache caching, node-cron background jobs.</p>
+          <div class="gh-repo-footer">
+            <span class="gh-lang-label">
+              <span class="gh-lang-dot" style="background:#f1e05a"></span> JavaScript
+            </span>
+            <span class="status-pill pill-soon">Pending</span>
+          </div>
         </div>
       </div>
 
-    </div>
+    </div><!-- /row -->
   </div>
 </section>
 
-<!-- ─── Contact Section ───────────────────────────────────────────────────────── -->
-<section class="contact-section py-6" id="contact">
+<!-- ─── CONTACT ───────────────────────────────────────────────────────────── -->
+<section class="gh-contact-section" id="contact">
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-7">
-        <div class="text-center mb-5">
-          <span class="badge-pill mb-3"><i class="bi bi-envelope me-1"></i>Get In Touch</span>
-          <h2 class="section-title">Contact Us</h2>
-          <p class="section-subtitle">Fill in the form and we'll get back to you.</p>
+
+        <div class="mb-4">
+          <div class="gh-section-label">Get in Touch</div>
+          <h2 class="gh-section-title">Open an Issue 📬</h2>
+          <p class="gh-section-desc">Have a question or collaboration idea? Send a message below.</p>
         </div>
 
-        <!-- Flash Message (server-rendered) -->
+        <!-- Flash Alert -->
         <% if (message) { %>
-          <div class="alert-custom alert-<%= messageType %> mb-4" role="alert" id="flashMsg">
-            <i class="bi bi-<%= messageType === 'success' ? 'check-circle-fill' : 'exclamation-triangle-fill' %> me-2"></i>
-            <%= message %>
+          <div class="gh-alert <%= messageType %>">
+            <i class="bi bi-<%= messageType === 'success' ? 'check-circle-fill' : 'exclamation-triangle-fill' %>" style="font-size:18px;flex-shrink:0;margin-top:1px"></i>
+            <div class="gh-alert-body">
+              <strong><%= messageType === 'success' ? 'Message sent!' : 'Something went wrong' %></strong>
+              <%= message %>
+            </div>
           </div>
         <% } %>
 
-        <!-- Contact Form -->
-        <form action="/contact" method="POST" class="glass-form" id="contactForm" novalidate>
-          <div class="row g-4">
-            <div class="col-md-6">
-              <div class="form-floating-custom">
-                <label for="name">Full Name <span class="text-accent">*</span></label>
-                <input type="text" id="name" name="name" class="form-input" placeholder="John Doe" required />
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="form-floating-custom">
-                <label for="email">Email Address <span class="text-accent">*</span></label>
-                <input type="email" id="email" name="email" class="form-input" placeholder="john@example.com" required />
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="form-floating-custom">
-                <label for="subject">Subject</label>
-                <input type="text" id="subject" name="subject" class="form-input" placeholder="What's this about?" />
-              </div>
-            </div>
-            <div class="col-12">
-              <div class="form-floating-custom">
-                <label for="message">Message <span class="text-accent">*</span></label>
-                <textarea id="message" name="message" class="form-input form-textarea" placeholder="Write your message here..." rows="5" required></textarea>
-              </div>
-            </div>
-            <div class="col-12 text-center">
-              <button type="submit" class="btn btn-accent btn-lg px-6" id="submitBtn">
-                <i class="bi bi-send me-2"></i>Send Message
-              </button>
-            </div>
+        <!-- Form wrapped in GitHub PR / Issue style box -->
+        <div class="gh-form-wrapper">
+          <div class="gh-form-header">
+            <i class="bi bi-chat-dots-fill" style="color:var(--gh-green)"></i>
+            New Message &nbsp;<span style="color:var(--gh-text-3);font-weight:400;font-size:12px">· Required fields marked <span style="color:var(--gh-red)">*</span></span>
           </div>
-        </form>
+          <div class="gh-form-body">
+            <form action="/contact" method="POST" id="contactForm" novalidate>
+
+              <div class="gh-form-row">
+                <div class="gh-form-group">
+                  <label class="gh-label" for="name">Full Name <span class="gh-required">*</span></label>
+                  <input type="text" id="name" name="name" class="gh-input" placeholder="John Doe" required />
+                </div>
+                <div class="gh-form-group">
+                  <label class="gh-label" for="email">Email <span class="gh-required">*</span></label>
+                  <input type="email" id="email" name="email" class="gh-input" placeholder="john@example.com" required />
+                </div>
+              </div>
+
+              <div class="gh-form-group">
+                <label class="gh-label" for="subject">Subject <span style="color:var(--gh-text-3);font-weight:400">(optional)</span></label>
+                <input type="text" id="subject" name="subject" class="gh-input" placeholder="What's this about?" />
+              </div>
+
+              <div class="gh-form-group">
+                <label class="gh-label" for="message">Message <span class="gh-required">*</span></label>
+                <textarea id="message" name="message" class="gh-input" rows="5" placeholder="Leave a comment..." required></textarea>
+                <p class="gh-form-note">Styling supported. Be excellent to each other.</p>
+              </div>
+
+              <div style="display:flex;justify-content:flex-end;gap:8px;padding-top:8px;border-top:1px solid var(--gh-border);margin-top:8px">
+                <button type="reset" class="gh-btn gh-btn-default">
+                  <i class="bi bi-x-lg"></i> Clear
+                </button>
+                <button type="submit" class="gh-btn gh-btn-primary" id="submitBtn">
+                  <i class="bi bi-send-fill"></i> Submit
+                </button>
+              </div>
+
+            </form>
+          </div>
+        </div>
 
       </div>
     </div>
@@ -258,3 +347,31 @@ app.<span class="code-fn">listen</span>(<span class="code-num">3000</span>, () =
 </section>
 
 <%- include('partials/footer') %>
+
+<!-- Contribution Graph Generator -->
+<script>
+  (function() {
+    const grid = document.getElementById('contribGrid');
+    if (!grid) return;
+    const levels = [null, 'l1', 'l2', 'l3', 'l4'];
+    const cols = 52;
+    for (let c = 0; c < cols; c++) {
+      const col = document.createElement('div');
+      col.className = 'gh-contrib-col';
+      for (let r = 0; r < 7; r++) {
+        const cell = document.createElement('div');
+        const rand = Math.random();
+        // Weight toward empty for most, active for recent weeks
+        const recentBoost = c > 48 ? 0.4 : 0;
+        let lvl = null;
+        if (rand < 0.35 + recentBoost) {
+          const l = Math.ceil(Math.random() * 4);
+          lvl = levels[l];
+        }
+        cell.className = 'gh-contrib-cell' + (lvl ? ' ' + lvl : '');
+        col.appendChild(cell);
+      }
+      grid.appendChild(col);
+    }
+  })();
+</script>
