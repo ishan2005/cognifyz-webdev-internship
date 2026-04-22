@@ -27,7 +27,7 @@ Each task is **self-contained in its own folder** with full source code, a detai
 | # | Task | Level | Concepts | Status | Video |
 |---|------|-------|----------|--------|-------|
 | 01 | [Server Setup & Landing Page](./Task-01-Server-Setup/) | 🟢 Beginner | Express, EJS, Routes, Forms | ✅ Done | [▶ Watch](https://linkedin.com) |
-| 02 | [Form Validation](./Task-02-Form-Validation/) | 🟢 Beginner | Client-side JS, Server validation | ⏳ Coming Soon | — |
+| 02 | [Form Validation](./Task-02-Form-Validation/) | 🟢 Beginner | Client-side JS, Server validation | ✅ Done | [▶ Watch](https://linkedin.com) |
 | 03 | [Responsive UI Design](./Task-03-Responsive-Design/) | 🟡 Intermediate | Bootstrap 5, CSS Animations | ⏳ Coming Soon | — |
 | 04 | [Advanced UI & Dynamic DOM](./Task-04-Advanced-UI/) | 🟡 Intermediate | Password Meter, Hash Routing, DOM | ⏳ Coming Soon | — |
 | 05 | [REST API — CRUD](./Task-05-REST-API/) | 🔴 Advanced | GET/POST/PUT/DELETE, Fetch API | ⏳ Coming Soon | — |
