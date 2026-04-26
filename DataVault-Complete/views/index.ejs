@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title><%= title %></title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container nav-inner">
+    <a href="#" class="brand" onclick="go('home')"><i class="bi bi-database-fill-lock"></i> DataVault</a>
+    <div class="nav-links">
+      <button class="nav-btn active" data-view="home"><i class="bi bi-house-fill"></i> Home</button>
+      <button class="nav-btn" data-view="auth"><i class="bi bi-person-lock"></i> Auth</button>
+      <button class="nav-btn" data-view="dashboard"><i class="bi bi-speedometer2"></i> Dashboard</button>
+      <button class="nav-btn" data-view="notes"><i class="bi bi-journals"></i> Notes</button>
+      <button class="nav-btn" data-view="weather"><i class="bi bi-cloud-sun"></i> Weather</button>
+      <button class="nav-btn" data-view="server"><i class="bi bi-server"></i> Server</button>
+      <button class="nav-btn" data-view="showcase"><i class="bi bi-palette"></i> Showcase</button>
+      <button class="nav-btn" data-view="advanced"><i class="bi bi-lightning-charge"></i> Advanced</button>
+    </div>
+    <div class="nav-right">
+      <span class="db-dot" id="dbDot"></span>
+      <span id="userChip" class="user-chip" style="display:none"></span>
+      <button class="btn btn-sm btn-outline" id="logoutBtn" style="display:none" onclick="logout()"><i class="bi bi-box-arrow-right"></i></button>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<!-- ═══ HOME ═══════════════════════════════════════════════════ -->
+<section class="view active" id="view-home">
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge"><i class="bi bi-database-fill-lock"></i> Cognifyz Web Dev Internship</div>
+      <h1 class="hero-title">DataVault <span class="gradient-text">Complete</span></h1>
+      <p class="hero-sub">All 8 tasks merged into one full-stack web application — authentication, REST API, MongoDB Atlas, real-time weather, logging, caching & cron jobs.</p>
+      <div class="hero-btns">
+        <button class="btn btn-primary btn-lg" onclick="go('auth')"><i class="bi bi-person-plus-fill"></i> Get Started</button>
+        <button class="btn btn-outline btn-lg" onclick="go('notes')"><i class="bi bi-journals"></i> View Notes</button>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="task-grid">
+      <% [
+        {n:'01',icon:'bi-server',title:'Server Setup',desc:'Express.js + EJS + static assets',color:'blue'},
+        {n:'02',icon:'bi-shield-check',title:'Form Validation',desc:'Client + server validation, real-time feedback',color:'green'},
+        {n:'03',icon:'bi-grid-3x3-gap',title:'Responsive Design',desc:'Bootstrap 5, CSS animations, glassmorphism',color:'purple'},
+        {n:'04',icon:'bi-lightning-charge',title:'Advanced UI',desc:'Hash routing SPA, DOM lab, password meter, Todo',color:'orange'},
+        {n:'05',icon:'bi-journals',title:'REST API CRUD',desc:'GET/POST/PUT/DELETE with Fetch API',color:'blue'},
+        {n:'06',icon:'bi-person-lock',title:'Database & Auth',desc:'MongoDB Atlas, Mongoose, JWT, bcrypt',color:'green'},
+        {n:'07',icon:'bi-cloud-sun',title:'External API',desc:'OpenWeatherMap + express-rate-limit',color:'purple'},
+        {n:'08',icon:'bi-cpu',title:'Server Features',desc:'morgan + node-cache + node-cron jobs',color:'orange'},
+      ].forEach(t => { %>
+      <div class="task-card <%= t.color %>" onclick="go(task<%=t.n%>Route)">
+        <div class="task-num"><%=t.n%></div>
+        <i class="bi <%=t.icon%> task-icon"></i>
+        <strong><%=t.title%></strong>
+        <p><%=t.desc%></p>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ AUTH ════════════════════════════════════════════════ -->
+<section class="view" id="view-auth">
+  <div class="container">
+    <div class="page-header">
+      <div class="eyebrow"><i class="bi bi-shield-lock-fill"></i> Task 02 + 06 · JWT · bcrypt · MongoDB</div>
+      <h1>Authentication</h1>
+      <p>Register and login with real MongoDB Atlas persistence and JWT tokens.</p>
+    </div>
+    <div class="auth-grid">
+      <div class="card">
+        <div class="card-header"><i class="bi bi-person-plus-fill" style="color:var(--green)"></i> Register <span class="pill post">POST /api/auth/register</span></div>
+        <div class="card-body">
+          <div class="form-group"><label>Full Name</label><input class="input" id="regName" placeholder="Ishan Agrawal"/></div>
+          <div class="form-group"><label>Email</label><input class="input" id="regEmail" type="email" placeholder="you@example.com"/></div>
+          <div class="form-group"><label>Password</label><input class="input" id="regPass" type="password" placeholder="Min 6 characters"/></div>
+          <button class="btn btn-primary w100" id="regBtn"><i class="bi bi-person-check"></i> Create Account</button>
+          <div class="auth-msg" id="regMsg"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><i class="bi bi-box-arrow-in-right" style="color:var(--blue)"></i> Login <span class="pill post">POST /api/auth/login</span></div>
+        <div class="card-body">
+          <div class="form-group"><label>Email</label><input class="input" id="loginEmail" type="email" placeholder="you@example.com"/></div>
+          <div class="form-group"><label>Password</label><input class="input" id="loginPass" type="password" placeholder="Your password"/></div>
+          <button class="btn btn-primary w100" id="loginBtn"><i class="bi bi-box-arrow-in-right"></i> Sign In</button>
+          <div class="auth-msg" id="loginMsg"></div>
+        </div>
+      </div>
+      <div class="card token-card">
+        <div class="card-header"><i class="bi bi-key-fill" style="color:var(--orange)"></i> JWT Token <span class="pill get">GET /api/auth/me</span></div>
+        <div class="card-body">
+          <div class="token-box" id="tokenBox"><div class="token-empty"><i class="bi bi-shield-slash"></i><p>Login to see your JWT token</p></div></div>
+          <button class="btn btn-outline w100 mt2" id="verifyBtn" disabled><i class="bi bi-patch-check"></i> Verify Token</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DASHBOARD ════════════════════════════════════════════ -->
+<section class="view" id="view-dashboard">
+  <div class="container">
+    <div class="page-header">
+      <div class="eyebrow"><i class="bi bi-person-badge-fill"></i> Protected · JWT Required</div>
+      <h1>Dashboard</h1>
+    </div>
+    <div id="dashLocked" class="locked"><i class="bi bi-lock-fill"></i><h3>Protected Route</h3><p>Login to access your dashboard.</p><button class="btn btn-primary" onclick="go('auth')">Login</button></div>
+    <div id="dashContent" style="display:none">
+      <div class="profile-card">
+        <div class="avatar" id="dashAvatar">?</div>
+        <div><h2 id="dashName">—</h2><p id="dashEmail" class="muted">—</p><div style="margin-top:8px"><span class="badge" id="dashRole">user</span><span class="muted ml1" id="dashJoined"></span></div></div>
+      </div>
+      <div class="dash-widgets mt4">
+        <div class="card"><div class="card-header"><i class="bi bi-journals" style="color:var(--blue)"></i> Recent Notes</div><div class="card-body" id="dashNotes"><p class="muted">Loading...</p></div></div>
+        <div class="card"><div class="card-header"><i class="bi bi-cloud-sun" style="color:var(--blue)"></i> Weather Widget</div>
+          <div class="card-body">
+            <div class="mini-weather-row"><input class="input" id="dashCity" placeholder="City name..." style="flex:1"/><button class="btn btn-primary btn-sm" onclick="dashWeather()"><i class="bi bi-search"></i></button></div>
+            <div id="dashWeatherResult" class="mt2"></div>
+          </div>
+        </div>
+        <div class="card"><div class="card-header"><i class="bi bi-bar-chart-fill" style="color:var(--green)"></i> Stats</div><div class="card-body" id="dashStats"><p class="muted">Loading...</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ NOTES ════════════════════════════════════════════════ -->
+<section class="view" id="view-notes">
+  <div class="container">
+    <div class="page-header">
+      <div class="eyebrow"><i class="bi bi-journals"></i> Task 05 · MongoDB Atlas · Protected</div>
+      <h1>Notes Manager</h1>
+      <p>Full CRUD — notes persist in MongoDB Atlas. Login required.</p>
+    </div>
+    <div id="notesLocked" class="locked"><i class="bi bi-lock-fill"></i><h3>Login Required</h3><button class="btn btn-primary" onclick="go('auth')">Login</button></div>
+    <div id="notesContent" style="display:none">
+      <div class="notes-layout">
+        <div>
+          <div class="card" id="noteFormCard">
+            <div class="card-header" id="noteFormTitle"><i class="bi bi-plus-circle-fill" style="color:var(--green)"></i> Create Note <span class="pill post">POST</span></div>
+            <div class="card-body">
+              <input type="hidden" id="editId"/>
+              <div class="form-group"><label>Title *</label><input class="input" id="noteTitle" placeholder="Note title..."/></div>
+              <div class="form-group"><label>Body *</label><textarea class="input textarea" id="noteBody" rows="4" placeholder="Content..."></textarea></div>
+              <div class="form-group"><label>Tag</label>
+                <select class="input" id="noteTag"><option>general</option><option>api</option><option>express</option><option>js</option><option>css</option><option>db</option></select>
+              </div>
+              <div class="btn-row">
+                <button class="btn btn-primary flex1" id="noteSubmit"><i class="bi bi-plus-lg"></i> Create</button>
+                <button class="btn btn-outline" id="noteCancelEdit" style="display:none">Cancel</button>
+              </div>
+            </div>
+          </div>
+          <div class="card mt2" id="noteStatsCard">
+            <div class="card-header"><i class="bi bi-bar-chart-fill" style="color:var(--blue)"></i> Stats</div>
+            <div class="card-body">
+              <div class="stat-row"><span>Total Notes</span><strong id="nStatTotal">—</strong></div>
+              <div class="stat-row"><span>Tags</span><strong id="nStatTags">—</strong></div>
+              <div id="nTagList" class="tag-list mt2"></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="notes-list-header">
+            <input class="input" id="noteSearch" placeholder="Search notes..." style="flex:1"/>
+            <div id="noteTagFilter" class="filter-tabs"></div>
+            <button class="btn btn-outline btn-sm" onclick="loadNotes()"><i class="bi bi-arrow-clockwise"></i></button>
+          </div>
+          <div id="notesList"></div>
+          <div class="response-log"><div class="log-hdr"><i class="bi bi-reception-4"></i> Last Response</div><pre id="noteResponse">// Make a request...</pre></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WEATHER ══════════════════════════════════════════════ -->
+<section class="view" id="view-weather">
+  <div class="container">
+    <div class="page-header">
+      <div class="eyebrow"><i class="bi bi-cloud-download-fill"></i> Task 07 · OpenWeatherMap · Rate Limited</div>
+      <h1>Live Weather</h1>
+      <p>Real weather from OpenWeatherMap API. Rate-limited to <strong>10 req/min</strong>. Results cached for <strong>30 seconds</strong>.</p>
+    </div>
+    <div class="search-card">
+      <div class="search-row">
+        <div class="search-wrap"><i class="bi bi-search search-icon"></i><input class="input search-input" id="wCity" placeholder="City name..."/></div>
+        <button class="btn btn-primary" id="wSearchBtn"><i class="bi bi-cloud-download"></i> Get Weather</button>
+      </div>
+      <div class="quick-pills">
+        <span class="muted" style="font-size:12px;font-weight:600">Quick:</span>
+        <% ['Mumbai','Delhi','Bangalore','London','Tokyo','New York','Paris','Dubai'].forEach(c => { %>
+        <button class="city-pill" data-city="<%= c %>"><%= c %></button>
+        <% }) %>
+      </div>
+    </div>
+    <div class="rate-bar" id="wRateBar" style="display:none">
+      <i class="bi bi-speedometer2"></i>
+      <span id="wRateText">10/10 remaining</span>
+      <div class="rate-track"><div class="rate-fill" id="wRateFill"></div></div>
+      <span id="wRateReset" class="muted" style="font-size:11px;font-family:monospace"></span>
+    </div>
+    <div id="weatherResult"></div>
+    <div class="error-card" id="wError" style="display:none"><i class="bi bi-exclamation-triangle-fill"></i><div><strong id="wErrTitle">Error</strong><p id="wErrMsg"></p></div></div>
+  </div>
+</section>
+
+<!-- ═══ SERVER ═══════════════════════════════════════════════ -->
+<section class="view" id="view-server">
+  <div class="container">
+    <div class="page-header">
+      <div class="eyebrow"><i class="bi bi-server"></i> Task 08 · morgan · node-cache · node-cron</div>
+      <h1>Server Monitor</h1>
+    </div>
+    <div class="server-tabs">
+      <button class="stab active" data-stab="slogs">📋 Request Logs</button>
+      <button class="stab" data-stab="scache">⚡ Cache</button>
+      <button class="stab" data-stab="scron">⏰ Cron Jobs</button>
+    </div>
+    <!-- Logs -->
+    <div class="stab-view active" id="stab-slogs">
+      <div class="stats-row" id="sStatsRow">
+        <div class="stat-chip"><i class="bi bi-arrow-down-up"></i><span id="sReqs">0</span><small>requests</small></div>
+        <div class="stat-chip green"><i class="bi bi-check-circle-fill"></i><span id="sCHits">0</span><small>cache hits</small></div>
+        <div class="stat-chip orange"><i class="bi bi-database-fill"></i><span id="sCMiss">0</span><small>db fetches</small></div>
+        <div class="stat-chip purple"><i class="bi bi-clock-fill"></i><span id="sCron">0</span><small>cron runs</small></div>
+      </div>
+      <div class="api-row">
+        <span class="muted" style="font-size:12px;font-weight:600">Fire requests:</span>
+        <button class="btn btn-outline btn-sm" onclick="hit('/api/notes-stats')">GET /api/notes-stats</button>
+        <button class="btn btn-outline btn-sm" onclick="hit('/api/cache-status')">GET /api/cache-status</button>
+        <button class="btn btn-sm" style="background:#dafbe1;border-color:#1a7f37;color:#1a7f37" id="sAutoBtn" onclick="toggleAuto()"><i class="bi bi-play-fill"></i> Auto-fire</button>
+      </div>
+      <div class="log-table">
+        <div class="log-hdr-row"><span>Method</span><span>URL</span><span>Status</span><span>ms</span><span>Time</span></div>
+        <div id="sLogBody"></div>
+      </div>
+    </div>
+    <!-- Cache -->
+    <div class="stab-view" id="stab-scache">
+      <div class="cache-grid">
+        <div class="card">
+          <div class="card-header"><i class="bi bi-lightning-charge" style="color:var(--blue)"></i> Cache Status</div>
+          <div class="card-body">
+            <div class="stat-row"><span>Keys Cached</span><strong id="cKeys">—</strong></div>
+            <div class="stat-row"><span>Cache Hits</span><strong id="cHits" style="color:var(--green)">—</strong></div>
+            <div class="stat-row"><span>Misses</span><strong id="cMiss" style="color:var(--orange)">—</strong></div>
+            <div class="stat-row"><span>TTL</span><strong>30 seconds</strong></div>
+            <div id="cKeyList" class="tag-list mt2"></div>
+            <button class="btn btn-outline w100 mt2" onclick="flushCache()"><i class="bi bi-trash3"></i> Flush Cache</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><i class="bi bi-info-circle" style="color:var(--blue)"></i> How Caching Works</div>
+          <div class="card-body">
+            <div class="how-list">
+              <div class="how-item"><div class="how-num">1</div><div><strong>Cache MISS</strong><p>First request — fetches from source, stores in cache for 30s</p></div></div>
+              <div class="how-item"><div class="how-num">2</div><div><strong>Cache HIT</strong><p>Subsequent requests served instantly from memory</p></div></div>
+              <div class="how-item"><div class="how-num">3</div><div><strong>TTL Expiry</strong><p>After 30s, key expires and next request is a MISS again</p></div></div>
+              <div class="how-item"><div class="how-num">4</div><div><strong>Cron Flush</strong><p>Every minute, cron job clears all keys automatically</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Cron -->
+    <div class="stab-view" id="stab-scron">
+      <div class="cron-cards">
+        <div class="cron-card"><div class="cron-icon blue"><i class="bi bi-box-seam-fill"></i></div><div><strong>📦 Cache Sweep</strong><div class="muted" style="font-size:12px">every 10s · <code>*/10 * * * * *</code></div><p>Reports cached keys and hit/miss stats</p></div></div>
+        <div class="cron-card"><div class="cron-icon green"><i class="bi bi-bar-chart-fill"></i></div><div><strong>📊 Stats Snapshot</strong><div class="muted" style="font-size:12px">every 30s · <code>*/30 * * * * *</code></div><p>Logs total requests, cache hits and misses</p></div></div>
+        <div class="cron-card"><div class="cron-icon red"><i class="bi bi-trash3-fill"></i></div><div><strong>🧹 Cache Flush</strong><div class="muted" style="font-size:12px">every 1 min · <code>* * * * *</code></div><p>Clears all cache keys for fresh data</p></div></div>
+      </div>
+      <div class="cron-log mt4">
+        <div class="log-hdr"><div class="live-dot"></div> Live Cron Log</div>
+        <div id="cronLogBody"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SHOWCASE ══════════════════════════════════════════════ -->
+<section class="view" id="view-showcase">
+  <div class="container">
+    <div class="page-header">
+      <div class="eyebrow"><i class="bi bi-palette-fill"></i> Task 03 · Bootstrap 5 · CSS Animations</div>
+      <h1>Responsive Design Showcase</h1>
+      <p>Animations, glassmorphism effects, progress bars and responsive grids.</p>
+    </div>
+    <div class="anim-grid">
+      <div class="anim-card bounce"><i class="bi bi-arrow-up-circle-fill" style="font-size:32px;color:var(--blue)"></i><strong>Bounce</strong><p>CSS keyframe animation</p></div>
+      <div class="anim-card pulse-card"><i class="bi bi-heart-fill" style="font-size:32px;color:var(--red)"></i><strong>Pulse</strong><p>Scaling animation</p></div>
+      <div class="anim-card spin-card"><i class="bi bi-gear-fill" style="font-size:32px;color:var(--purple)"></i><strong>Spin</strong><p>Rotation animation</p></div>
+      <div class="anim-card slide-card"><i class="bi bi-arrow-right-circle-fill" style="font-size:32px;color:var(--green)"></i><strong>Slide</strong><p>Slide-in animation</p></div>
+    </div>
+    <div class="glass-card mt4">
+      <div class="glass-inner">
+        <i class="bi bi-stars" style="font-size:48px;color:rgba(255,255,255,0.9)"></i>
+        <h3>Glassmorphism Effect</h3>
+        <p>backdrop-filter: blur + semi-transparent background</p>
+      </div>
+    </div>
+    <div class="progress-section mt4">
+      <h3 style="margin-bottom:16px">Skills Progress</h3>
+      <% [['HTML/CSS','95%'],['JavaScript','88%'],['Node.js','82%'],['MongoDB','75%'],['React','70%']].forEach(([s,p]) => { %>
+      <div class="prog-wrap"><div class="prog-label"><span><%=s%></span><span><%=p%></span></div><div class="prog-bar"><div class="prog-fill" style="width:<%=p%>"></div></div></div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ADVANCED ══════════════════════════════════════════════ -->
+<section class="view" id="view-advanced">
+  <div class="container">
+    <div class="page-header">
+      <div class="eyebrow"><i class="bi bi-lightning-charge-fill"></i> Task 04 · Hash Routing · DOM · Todo</div>
+      <h1>Advanced UI & DOM</h1>
+    </div>
+    <div class="adv-grid">
+      <!-- Password Meter -->
+      <div class="card">
+        <div class="card-header"><i class="bi bi-key-fill" style="color:var(--orange)"></i> Password Strength Meter</div>
+        <div class="card-body">
+          <div class="form-group"><label>Enter Password</label><input class="input" id="pwInput" type="text" placeholder="Type a password..."/></div>
+          <div class="pw-bar-wrap"><div class="pw-bar" id="pwBar"></div></div>
+          <div class="pw-label" id="pwLabel">Type a password to check strength</div>
+          <div class="pw-details" id="pwDetails"></div>
+          <button class="btn btn-outline w100 mt2" onclick="genPw()"><i class="bi bi-shuffle"></i> Generate Strong Password</button>
+        </div>
+      </div>
+      <!-- DOM Lab -->
+      <div class="card">
+        <div class="card-header"><i class="bi bi-braces-asterisk" style="color:var(--purple)"></i> DOM Manipulation Lab</div>
+        <div class="card-body">
+          <div class="form-group"><label>Text</label><input class="input" id="domText" placeholder="Element text..."/></div>
+          <div class="dom-row">
+            <select class="input" id="domTag"><option>p</option><option>h3</option><option>blockquote</option><option>li</option></select>
+            <input class="input" id="domColor" type="color" value="#0969da" style="width:50px;padding:2px"/>
+            <button class="btn btn-primary" onclick="addEl()"><i class="bi bi-plus-lg"></i> Add</button>
+          </div>
+          <div class="dom-output" id="domOutput"></div>
+          <button class="btn btn-outline w100 mt2" onclick="document.getElementById('domOutput').innerHTML=''"><i class="bi bi-trash3"></i> Clear</button>
+        </div>
+      </div>
+      <!-- Todo App -->
+      <div class="card todo-card">
+        <div class="card-header"><i class="bi bi-check2-square" style="color:var(--green)"></i> Todo App <span class="pill" style="background:#dafbe1;color:#1a7f37;font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px">localStorage</span></div>
+        <div class="card-body">
+          <div class="todo-input-row">
+            <input class="input flex1" id="todoInput" placeholder="Add a todo..." onkeydown="if(event.key==='Enter')addTodo()"/>
+            <button class="btn btn-primary" onclick="addTodo()"><i class="bi bi-plus-lg"></i></button>
+          </div>
+          <div id="todoList" class="mt2"></div>
+          <button class="btn btn-outline w100 mt2" onclick="clearDone()"><i class="bi bi-check2-all"></i> Clear Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span class="footer-brand"><i class="bi bi-database-fill-lock"></i> &copy; <%= new Date().getFullYear() %> Ishan Agrawal · Cognifyz Web Dev Internship</span>
+    <div class="footer-links">
+      <a href="https://github.com/ishan2005/cognifyz-webdev-internship" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/in/agrawalishan2005" target="_blank">LinkedIn</a>
+    </div>
+    <span class="footer-right">Tasks 01–08 · MongoDB · JWT · Weather · Cron</span>
+  </div>
+</footer>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
