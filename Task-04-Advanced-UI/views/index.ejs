@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="DataVault Task 04 — Advanced UI, Dynamic DOM, Hash Routing, Password Strength Meter"/>
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+<!-- ─── NAVBAR ──────────────────────────────────────────────── -->
+<nav class="dv-navbar" id="navbar">
+  <div class="container">
+    <a href="#/dashboard" class="dv-brand" id="navBrand">
+      <svg width="22" height="22" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      ishan2005 / datavault
+    </a>
+
+    <nav class="dv-nav-tabs" id="navTabs">
+      <a href="#/dashboard" class="dv-tab" data-route="dashboard">
+        <i class="bi bi-grid-3x3-gap"></i> Dashboard
+      </a>
+      <a href="#/password" class="dv-tab" data-route="password">
+        <i class="bi bi-shield-lock"></i> Password Meter
+      </a>
+      <a href="#/dom" class="dv-tab" data-route="dom">
+        <i class="bi bi-code-slash"></i> DOM Lab
+      </a>
+      <a href="#/todo" class="dv-tab" data-route="todo">
+        <i class="bi bi-check2-square"></i> Todo App
+      </a>
+    </nav>
+
+    <div class="dv-nav-right">
+      <span class="dv-task-badge">Task 04</span>
+      <a href="https://github.com/ishan2005/cognifyz-webdev-internship" target="_blank" class="dv-btn dv-btn-sm dv-btn-outline">
+        <i class="bi bi-code-slash"></i> View Code
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ─── VIEWS CONTAINER ─────────────────────────────────────── -->
+<main class="dv-main" id="appRoot">
+
+  <!-- ══════════════════ VIEW: DASHBOARD ══════════════════════ -->
+  <div class="dv-view" id="view-dashboard">
+    <div class="container">
+      <div class="dv-page-header">
+        <div class="dv-eyebrow"><i class="bi bi-mortarboard-fill"></i> Task 04 of 08 — Advanced UI</div>
+        <h1 class="dv-page-title">Dynamic DOM & Hash Routing</h1>
+        <p class="dv-page-desc">
+          A single-page app shell with <strong>hash-based client-side routing</strong>,
+          a real-time <strong>password strength meter</strong>,
+          a <strong>DOM manipulation lab</strong>, and a <strong>live Todo app</strong> — all in vanilla JS.
+        </p>
+      </div>
+
+      <!-- Concept cards -->
+      <div class="dv-cards-grid">
+
+        <a href="#/password" class="dv-concept-card" id="card-password">
+          <div class="dv-cc-icon blue"><i class="bi bi-shield-lock-fill"></i></div>
+          <div class="dv-cc-body">
+            <h3>Password Strength Meter</h3>
+            <p>Real-time entropy scoring, strength label, and visual indicator as you type.</p>
+          </div>
+          <i class="bi bi-arrow-right dv-cc-arrow"></i>
+        </a>
+
+        <a href="#/dom" class="dv-concept-card" id="card-dom">
+          <div class="dv-cc-icon purple"><i class="bi bi-braces-asterisk"></i></div>
+          <div class="dv-cc-body">
+            <h3>DOM Manipulation Lab</h3>
+            <p>Dynamically create, style, move, and delete HTML elements without page reload.</p>
+          </div>
+          <i class="bi bi-arrow-right dv-cc-arrow"></i>
+        </a>
+
+        <a href="#/todo" class="dv-concept-card" id="card-todo">
+          <div class="dv-cc-icon green"><i class="bi bi-check2-all"></i></div>
+          <div class="dv-cc-body">
+            <h3>Dynamic Todo App</h3>
+            <p>Add, complete, filter and delete todos. State persists in localStorage.</p>
+          </div>
+          <i class="bi bi-arrow-right dv-cc-arrow"></i>
+        </a>
+
+        <div class="dv-concept-card no-link" id="card-routing">
+          <div class="dv-cc-icon orange"><i class="bi bi-hash"></i></div>
+          <div class="dv-cc-body">
+            <h3>Hash-Based Routing</h3>
+            <p>SPA navigation via <code>hashchange</code> events. No page reloads — watch the URL bar.</p>
+          </div>
+          <span class="dv-cc-hash-pill">Active: <span id="currentHashDisplay">#/dashboard</span></span>
+        </div>
+
+      </div>
+
+      <!-- Info Banner -->
+      <div class="dv-info-banner mt-4">
+        <i class="bi bi-info-circle-fill"></i>
+        <div>
+          <strong>How hash routing works:</strong>
+          Each tab updates <code>window.location.hash</code>. The router listens to the
+          <code>hashchange</code> event and swaps the visible view — no server round-trips.
+          Try clicking the tabs above and watch the URL change!
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════ VIEW: PASSWORD ═══════════════════════ -->
+  <div class="dv-view hidden" id="view-password">
+    <div class="container">
+      <div class="dv-page-header">
+        <div class="dv-eyebrow"><i class="bi bi-shield-lock-fill"></i> Password Strength Meter</div>
+        <h1 class="dv-page-title">Test Your Password</h1>
+        <p class="dv-page-desc">Real-time scoring based on length, character variety, and entropy calculation.</p>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-7">
+          <div class="dv-card">
+            <div class="dv-card-header">
+              <i class="bi bi-key-fill" style="color:var(--dv-blue)"></i> Password Analyzer
+            </div>
+            <div class="dv-card-body">
+
+              <!-- Input -->
+              <div class="dv-input-wrap mb-3">
+                <input type="password" id="pwInput" class="dv-input" placeholder="Type a password to analyze..." autocomplete="off"/>
+                <button type="button" class="dv-eye-btn" id="pwToggle">
+                  <i class="bi bi-eye" id="pwEye"></i>
+                </button>
+              </div>
+
+              <!-- Strength Bar -->
+              <div class="dv-strength-track mb-2">
+                <div class="dv-strength-fill" id="pwFill"></div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <span class="dv-strength-label" id="pwLabel">Start typing...</span>
+                <span class="dv-entropy-badge" id="pwEntropy"></span>
+              </div>
+
+              <!-- Criteria checklist -->
+              <div class="dv-criteria-grid" id="criteriaGrid">
+                <div class="dv-criterion" id="cr-len">
+                  <i class="bi bi-circle"></i> 8+ characters
+                </div>
+                <div class="dv-criterion" id="cr-upper">
+                  <i class="bi bi-circle"></i> Uppercase letter
+                </div>
+                <div class="dv-criterion" id="cr-lower">
+                  <i class="bi bi-circle"></i> Lowercase letter
+                </div>
+                <div class="dv-criterion" id="cr-num">
+                  <i class="bi bi-circle"></i> Number
+                </div>
+                <div class="dv-criterion" id="cr-sym">
+                  <i class="bi bi-circle"></i> Symbol (!@#$...)
+                </div>
+                <div class="dv-criterion" id="cr-long">
+                  <i class="bi bi-circle"></i> 16+ characters
+                </div>
+              </div>
+
+              <!-- Suggestions -->
+              <div class="dv-suggestions" id="pwSuggestions"></div>
+
+              <!-- Stats row -->
+              <div class="dv-pw-stats" id="pwStats">
+                <div class="dv-pw-stat">
+                  <span class="dv-pw-stat-val" id="statLen">0</span>
+                  <span class="dv-pw-stat-lbl">Length</span>
+                </div>
+                <div class="dv-pw-stat">
+                  <span class="dv-pw-stat-val" id="statEntropy">0</span>
+                  <span class="dv-pw-stat-lbl">Entropy (bits)</span>
+                </div>
+                <div class="dv-pw-stat">
+                  <span class="dv-pw-stat-val" id="statCharset">0</span>
+                  <span class="dv-pw-stat-lbl">Charset size</span>
+                </div>
+                <div class="dv-pw-stat">
+                  <span class="dv-pw-stat-val" id="statScore">0/5</span>
+                  <span class="dv-pw-stat-lbl">Score</span>
+                </div>
+              </div>
+
+              <!-- Generator -->
+              <div class="dv-generator-row">
+                <button class="dv-btn dv-btn-primary" id="generateBtn">
+                  <i class="bi bi-lightning-charge-fill"></i> Generate Strong Password
+                </button>
+                <button class="dv-btn dv-btn-default" id="copyBtn" disabled>
+                  <i class="bi bi-clipboard"></i> Copy
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ VIEW: DOM LAB ════════════════════════ -->
+  <div class="dv-view hidden" id="view-dom">
+    <div class="container">
+      <div class="dv-page-header">
+        <div class="dv-eyebrow"><i class="bi bi-braces-asterisk"></i> DOM Manipulation Lab</div>
+        <h1 class="dv-page-title">Dynamic DOM Workshop</h1>
+        <p class="dv-page-desc">Create, style, rearrange, and delete elements in real time — no page reload.</p>
+      </div>
+
+      <div class="row g-4">
+        <!-- Controls Panel -->
+        <div class="col-lg-4">
+          <div class="dv-card sticky-lg-top" style="top:80px">
+            <div class="dv-card-header"><i class="bi bi-sliders" style="color:var(--dv-purple)"></i> Controls</div>
+            <div class="dv-card-body">
+
+              <div class="dv-form-group">
+                <label class="dv-label">Element Type</label>
+                <select class="dv-input" id="elemType">
+                  <option value="card">📦 Info Card</option>
+                  <option value="alert">⚠️ Alert Box</option>
+                  <option value="badge">🏷️ Badge</option>
+                  <option value="progress">📊 Progress Bar</option>
+                  <option value="code">💻 Code Block</option>
+                </select>
+              </div>
+
+              <div class="dv-form-group">
+                <label class="dv-label">Content / Label</label>
+                <input type="text" class="dv-input" id="elemContent" placeholder="Enter text content..."/>
+              </div>
+
+              <div class="dv-form-group">
+                <label class="dv-label">Color Theme</label>
+                <div class="dv-color-picker" id="colorPicker">
+                  <button class="dv-color-btn active" data-color="blue" style="background:#ddf4ff;border-color:#0969da" title="Blue"></button>
+                  <button class="dv-color-btn" data-color="green" style="background:#dafbe1;border-color:#1a7f37" title="Green"></button>
+                  <button class="dv-color-btn" data-color="purple" style="background:#fbefff;border-color:#8250df" title="Purple"></button>
+                  <button class="dv-color-btn" data-color="orange" style="background:#fff8c5;border-color:#c86000" title="Orange"></button>
+                  <button class="dv-color-btn" data-color="red" style="background:#ffebe9;border-color:#cf222e" title="Red"></button>
+                </div>
+              </div>
+
+              <button class="dv-btn dv-btn-primary w-100 mb-2" id="addElemBtn">
+                <i class="bi bi-plus-lg"></i> Add Element
+              </button>
+              <button class="dv-btn dv-btn-danger w-100" id="clearAllBtn">
+                <i class="bi bi-trash3"></i> Clear All
+              </button>
+
+              <!-- DOM Counter -->
+              <div class="dv-dom-counter mt-3">
+                <span id="elemCount">0</span> elements in DOM
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Canvas -->
+        <div class="col-lg-8">
+          <div class="dv-dom-canvas" id="domCanvas">
+            <div class="dv-canvas-empty" id="canvasEmpty">
+              <i class="bi bi-plus-circle"></i>
+              <p>Use the controls to add elements to the DOM</p>
+              <p style="font-size:12px;color:var(--dv-text-3)">Elements appear here without any page reload</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ VIEW: TODO ════════════════════════════ -->
+  <div class="dv-view hidden" id="view-todo">
+    <div class="container">
+      <div class="dv-page-header">
+        <div class="dv-eyebrow"><i class="bi bi-check2-all"></i> Dynamic Todo App</div>
+        <h1 class="dv-page-title">Todo List</h1>
+        <p class="dv-page-desc">Add, complete, filter and delete tasks. Saved to <code>localStorage</code> — persists on refresh.</p>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-lg-7">
+
+          <!-- Add Todo -->
+          <div class="dv-card mb-4">
+            <div class="dv-card-body">
+              <div class="dv-todo-input-row">
+                <input type="text" id="todoInput" class="dv-input" placeholder="What needs to be done?" maxlength="100"/>
+                <select class="dv-input dv-select-sm" id="todoPriority">
+                  <option value="normal">Normal</option>
+                  <option value="high">🔴 High</option>
+                  <option value="low">🟢 Low</option>
+                </select>
+                <button class="dv-btn dv-btn-primary" id="addTodoBtn">
+                  <i class="bi bi-plus-lg"></i> Add
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filters + Stats -->
+          <div class="dv-todo-bar">
+            <div class="dv-todo-filters" id="todoFilters">
+              <button class="dv-filter-btn active" data-filter="all">All</button>
+              <button class="dv-filter-btn" data-filter="active">Active</button>
+              <button class="dv-filter-btn" data-filter="done">Completed</button>
+            </div>
+            <div class="dv-todo-stats" id="todoStats">0 tasks</div>
+          </div>
+
+          <!-- Todo List -->
+          <div class="dv-todo-list" id="todoList">
+            <div class="dv-todo-empty" id="todoEmpty">
+              <i class="bi bi-clipboard-check"></i>
+              <p>No tasks yet — add one above!</p>
+            </div>
+          </div>
+
+          <!-- Bulk Actions -->
+          <div class="dv-todo-actions mt-3" id="todoActions" style="display:none">
+            <button class="dv-btn dv-btn-default dv-btn-sm" id="markAllBtn">
+              <i class="bi bi-check-all"></i> Mark All Done
+            </button>
+            <button class="dv-btn dv-btn-danger dv-btn-sm" id="clearDoneBtn">
+              <i class="bi bi-trash3"></i> Clear Completed
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ─── FOOTER ───────────────────────────────────────────────── -->
+<footer class="dv-footer">
+  <div class="container">
+    <div class="dv-footer-inner">
+      <span class="dv-footer-brand">
+        <svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+        &copy; <%= new Date().getFullYear() %> Ishan Agrawal · Cognifyz Internship
+      </span>
+      <div class="dv-footer-links">
+        <a href="https://github.com/ishan2005/cognifyz-webdev-internship" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/in/agrawalishan2005" target="_blank">LinkedIn</a>
+      </div>
+      <span class="dv-footer-task">Task 04 — Hash Routing · Password Meter · Dynamic DOM · Todo App</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/js/router.js"></script>
+<script src="/js/password.js"></script>
+<script src="/js/dom-lab.js"></script>
+<script src="/js/todo.js"></script>
+</body>
+</html>
