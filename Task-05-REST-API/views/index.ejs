@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="DataVault Task 05 — REST API CRUD with Fetch API"/>
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+<!-- ─── NAVBAR ──────────────────────────────────────────────── -->
+<nav class="dv-navbar">
+  <div class="container">
+    <a href="/" class="dv-brand">
+      <i class="bi bi-database-fill-lock"></i> DataVault
+    </a>
+    <div class="dv-nav-center">
+      <button class="dv-tab active" data-view="notes" id="tab-notes">
+        <i class="bi bi-journals"></i> Notes
+      </button>
+      <button class="dv-tab" data-view="api" id="tab-api">
+        <i class="bi bi-terminal"></i> API Tester
+      </button>
+      <button class="dv-tab" data-view="docs" id="tab-docs">
+        <i class="bi bi-file-text"></i> API Docs
+      </button>
+    </div>
+    <div class="dv-nav-right">
+      <span class="dv-task-pill">Task 05</span>
+      <a href="https://github.com/ishan2005/cognifyz-webdev-internship" target="_blank" class="dv-btn dv-btn-sm dv-btn-outline">
+        <i class="bi bi-github"></i> Repo
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main class="dv-main">
+
+  <!-- ══════════ VIEW: NOTES (CRUD) ══════════════════════════ -->
+  <div class="dv-view active" id="view-notes">
+    <div class="container">
+
+      <!-- Header -->
+      <div class="dv-page-header">
+        <div class="dv-eyebrow"><i class="bi bi-hdd-rack-fill"></i> REST API · In-Memory Store</div>
+        <h1 class="dv-page-title">Notes Manager</h1>
+        <p class="dv-page-desc">Full CRUD via <code>fetch()</code> — create, read, update and delete notes using <strong>GET / POST / PUT / DELETE</strong> endpoints.</p>
+      </div>
+
+      <div class="row g-4">
+
+        <!-- Left: Create form -->
+        <div class="col-lg-4">
+          <div class="dv-card" id="noteFormCard">
+            <div class="dv-card-header" id="formTitle">
+              <i class="bi bi-plus-circle-fill" style="color:var(--dv-green)"></i>
+              Create Note <span class="dv-method-pill post">POST</span>
+            </div>
+            <div class="dv-card-body">
+              <input type="hidden" id="editId"/>
+              <div class="dv-form-group">
+                <label class="dv-label">Title *</label>
+                <input class="dv-input" id="noteTitle" placeholder="Note title..."/>
+              </div>
+              <div class="dv-form-group">
+                <label class="dv-label">Body *</label>
+                <textarea class="dv-input dv-textarea" id="noteBody" rows="4" placeholder="Note content..."></textarea>
+              </div>
+              <div class="dv-form-group">
+                <label class="dv-label">Tag</label>
+                <select class="dv-input" id="noteTag">
+                  <option value="general">general</option>
+                  <option value="api">api</option>
+                  <option value="express">express</option>
+                  <option value="js">js</option>
+                  <option value="css">css</option>
+                  <option value="db">db</option>
+                </select>
+              </div>
+              <div class="dv-btn-row">
+                <button class="dv-btn dv-btn-primary flex-1" id="submitBtn">
+                  <i class="bi bi-plus-lg"></i> Create Note
+                </button>
+                <button class="dv-btn dv-btn-default" id="cancelEditBtn" style="display:none">
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stats Card -->
+          <div class="dv-card mt-3" id="statsCard">
+            <div class="dv-card-header">
+              <i class="bi bi-bar-chart-fill" style="color:var(--dv-blue)"></i> Stats
+              <span class="dv-method-pill get">GET /api/stats</span>
+            </div>
+            <div class="dv-card-body" id="statsBody">
+              <div class="dv-stat-row"><span>Total Notes</span><strong id="statTotal">—</strong></div>
+              <div class="dv-stat-row"><span>Tags</span><strong id="statTags">—</strong></div>
+              <div id="statTagList" class="dv-tag-list mt-2"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Notes list -->
+        <div class="col-lg-8">
+          <div class="dv-list-header">
+            <div class="dv-search-wrap">
+              <i class="bi bi-search dv-search-icon"></i>
+              <input class="dv-input dv-search" id="searchInput" placeholder="Search notes..."/>
+            </div>
+            <div class="dv-filter-tabs" id="tagFilter">
+              <button class="dv-filter active" data-tag="">All</button>
+            </div>
+            <button class="dv-btn dv-btn-default dv-btn-sm" id="refreshBtn">
+              <i class="bi bi-arrow-clockwise"></i>
+            </button>
+          </div>
+
+          <div id="notesList"></div>
+
+          <!-- Response log -->
+          <div class="dv-response-log" id="responseLog">
+            <div class="dv-log-header">
+              <i class="bi bi-reception-4"></i> Last API Response
+            </div>
+            <pre id="responseBody">// Make a request to see the response</pre>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ VIEW: API TESTER ════════════════════════════ -->
+  <div class="dv-view" id="view-api">
+    <div class="container">
+      <div class="dv-page-header">
+        <div class="dv-eyebrow"><i class="bi bi-terminal-fill"></i> Postman-lite</div>
+        <h1 class="dv-page-title">API Tester</h1>
+        <p class="dv-page-desc">Send raw HTTP requests to the REST API and inspect the JSON response in real time.</p>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-lg-5">
+          <div class="dv-card">
+            <div class="dv-card-header"><i class="bi bi-send-fill" style="color:var(--dv-blue)"></i> Request</div>
+            <div class="dv-card-body">
+              <div class="dv-form-group">
+                <label class="dv-label">Method + URL</label>
+                <div class="dv-method-row">
+                  <select class="dv-input dv-method-select" id="reqMethod">
+                    <option>GET</option>
+                    <option>POST</option>
+                    <option>PUT</option>
+                    <option>DELETE</option>
+                  </select>
+                  <input class="dv-input flex-1" id="reqUrl" value="/api/notes"/>
+                </div>
+              </div>
+              <div class="dv-form-group" id="bodyGroup">
+                <label class="dv-label">Body (JSON)</label>
+                <textarea class="dv-input dv-textarea dv-mono" id="reqBody" rows="6" placeholder='{"title":"My Note","body":"Content here","tag":"api"}'></textarea>
+              </div>
+              <button class="dv-btn dv-btn-primary w-100" id="sendReqBtn">
+                <i class="bi bi-send"></i> Send Request
+              </button>
+              <div class="dv-quick-urls mt-3">
+                <div class="dv-quick-label">Quick URLs:</div>
+                <button class="dv-quick-btn" data-method="GET" data-url="/api/notes">GET /api/notes</button>
+                <button class="dv-quick-btn" data-method="GET" data-url="/api/notes/1">GET /api/notes/1</button>
+                <button class="dv-quick-btn" data-method="GET" data-url="/api/stats">GET /api/stats</button>
+                <button class="dv-quick-btn post" data-method="POST" data-url="/api/notes" data-body='{"title":"New Note","body":"Body text","tag":"api"}'>POST /api/notes</button>
+                <button class="dv-quick-btn put" data-method="PUT" data-url="/api/notes/1" data-body='{"title":"Updated Title"}'>PUT /api/notes/1</button>
+                <button class="dv-quick-btn del" data-method="DELETE" data-url="/api/notes/1">DELETE /api/notes/1</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="dv-card h-100">
+            <div class="dv-card-header" id="respHeader">
+              <i class="bi bi-code-slash" style="color:var(--dv-blue)"></i> Response
+              <span class="dv-status-badge" id="respStatus"></span>
+              <span class="ms-auto dv-resp-time" id="respTime"></span>
+            </div>
+            <div class="dv-card-body dv-resp-body">
+              <pre id="apiRespBody" class="dv-json-view">// Click "Send Request" to see response</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ VIEW: API DOCS ══════════════════════════════ -->
+  <div class="dv-view" id="view-docs">
+    <div class="container">
+      <div class="dv-page-header">
+        <div class="dv-eyebrow"><i class="bi bi-file-earmark-text-fill"></i> API Reference</div>
+        <h1 class="dv-page-title">REST API Documentation</h1>
+        <p class="dv-page-desc">Base URL: <code>http://localhost:3004/api</code> · All responses are JSON.</p>
+      </div>
+
+      <div class="dv-docs-grid">
+
+        <% [
+          { method:'GET',    path:'/notes',       desc:'List all notes. Optional query: ?tag=api', status:'200', body: null,
+             resp:'{ "success": true, "count": 3, "data": [...] }' },
+          { method:'GET',    path:'/notes/:id',   desc:'Get a single note by ID', status:'200', body: null,
+             resp:'{ "success": true, "data": { "id": 1, "title": "...", ... } }' },
+          { method:'POST',   path:'/notes',       desc:'Create a new note', status:'201',
+             body:'{ "title": "string *", "body": "string *", "tag": "string" }',
+             resp:'{ "success": true, "data": { "id": 4, ... } }' },
+          { method:'PUT',    path:'/notes/:id',   desc:'Update an existing note', status:'200',
+             body:'{ "title": "string", "body": "string", "tag": "string" }',
+             resp:'{ "success": true, "data": { "id": 1, "updatedAt": "...", ... } }' },
+          { method:'DELETE', path:'/notes/:id',   desc:'Delete a note by ID', status:'200', body: null,
+             resp:'{ "success": true, "data": {...}, "message": "Note deleted" }' },
+          { method:'GET',    path:'/stats',       desc:'Get aggregate stats (totals, tag counts)', status:'200', body: null,
+             resp:'{ "success": true, "data": { "total": 3, "tags": [...], "tagCounts": {...} } }' },
+        ].forEach(ep => { %>
+        <div class="dv-doc-card">
+          <div class="dv-doc-header">
+            <span class="dv-method-pill <%= ep.method.toLowerCase() %>"><%= ep.method %></span>
+            <code class="dv-doc-path">/api<%= ep.path %></code>
+            <span class="dv-doc-status">→ <%= ep.status %></span>
+          </div>
+          <p class="dv-doc-desc"><%= ep.desc %></p>
+          <% if (ep.body) { %>
+          <div class="dv-doc-section">
+            <div class="dv-doc-label">Request Body</div>
+            <pre class="dv-doc-code"><%= ep.body %></pre>
+          </div>
+          <% } %>
+          <div class="dv-doc-section">
+            <div class="dv-doc-label">Response</div>
+            <pre class="dv-doc-code"><%= ep.resp %></pre>
+          </div>
+        </div>
+        <% }) %>
+
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- ─── FOOTER ───────────────────────────────────────────────── -->
+<footer class="dv-footer">
+  <div class="container dv-footer-inner">
+    <span class="dv-footer-brand"><i class="bi bi-database-fill-lock"></i> &copy; <%= new Date().getFullYear() %> Ishan Agrawal · Cognifyz</span>
+    <div class="dv-footer-links">
+      <a href="https://github.com/ishan2005/cognifyz-webdev-internship" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/in/agrawalishan2005" target="_blank">LinkedIn</a>
+    </div>
+    <span class="dv-footer-task">Task 05 — GET · POST · PUT · DELETE · Fetch API</span>
+  </div>
+</footer>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
