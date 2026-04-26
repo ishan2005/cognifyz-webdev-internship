@@ -77,15 +77,15 @@ app.get('/api/weather', searchLimiter, async (req, res) => {
   }
 
   try {
-    const geoUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(city)}&limit=1&appid=${API_KEY}`;
-    const geoRes = await fetch(geoUrl);
-    const geoData = await geoRes.json();
-    if (!geoData.length) return res.status(404).json({ success: false, error: `City "${city}" not found` });
-
-    const { lat, lon, name, country } = geoData[0];
-    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`;
+    const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&appid=${API_KEY}&units=metric`;
     const wRes  = await fetch(weatherUrl);
     const wData = await wRes.json();
+    if (wData.cod === '404' || wData.cod === 404) return res.status(404).json({ success: false, error: `City "${city}" not found` });
+    if (wData.cod === 401) return res.status(401).json({ success: false, error: 'Invalid API key — check your .env file' });
+    const name    = wData.name;
+    const country = wData.sys.country;
+    const lat     = wData.coord.lat;
+    const lon     = wData.coord.lon;
 
     res.json({
       success: true,
