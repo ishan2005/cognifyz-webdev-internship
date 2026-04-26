@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="DataVault Task 08 — Morgan Logging, Node-Cache, Node-Cron"/>
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+<nav class="dv-navbar">
+  <div class="container">
+    <a href="/" class="dv-brand"><i class="bi bi-server"></i> DataVault Server</a>
+    <div class="dv-nav-tabs">
+      <button class="dv-tab active" data-view="logs"><i class="bi bi-journal-text"></i> Logs</button>
+      <button class="dv-tab" data-view="cache"><i class="bi bi-lightning-charge"></i> Cache</button>
+      <button class="dv-tab" data-view="cron"><i class="bi bi-clock-history"></i> Cron Jobs</button>
+    </div>
+    <div class="dv-nav-right">
+      <div class="dv-live-dot"></div><span class="dv-live-label">Live</span>
+      <span class="dv-task-pill">Task 08</span>
+      <a href="https://github.com/ishan2005/cognifyz-webdev-internship" target="_blank" class="dv-btn dv-btn-sm dv-btn-outline"><i class="bi bi-github"></i></a>
+    </div>
+  </div>
+</nav>
+
+<main class="dv-main">
+
+  <!-- ══════ VIEW: LOGS ══════════════════════════════════════ -->
+  <div class="dv-view active" id="view-logs">
+    <div class="container">
+      <div class="dv-page-header">
+        <div class="dv-eyebrow"><i class="bi bi-journal-fill"></i> morgan — HTTP Request Logger</div>
+        <h1 class="dv-page-title">Request Logs</h1>
+        <p class="dv-page-desc">Every HTTP request is intercepted by <code>morgan</code> middleware and stored in memory. Logs auto-refresh every 2 seconds.</p>
+      </div>
+
+      <!-- Stats bar -->
+      <div class="dv-stats-row" id="statsRow">
+        <div class="dv-stat-chip"><i class="bi bi-arrow-down-up"></i><span id="statReqs">0</span><small>total requests</small></div>
+        <div class="dv-stat-chip green"><i class="bi bi-check-circle-fill"></i><span id="statHits">0</span><small>cache hits</small></div>
+        <div class="dv-stat-chip orange"><i class="bi bi-database-fill"></i><span id="statMisses">0</span><small>db fetches</small></div>
+        <div class="dv-stat-chip purple"><i class="bi bi-clock-fill"></i><span id="statCron">0</span><small>cron runs</small></div>
+      </div>
+
+      <!-- API test buttons -->
+      <div class="dv-api-row">
+        <span class="dv-api-label">Generate logs:</span>
+        <button class="dv-btn dv-btn-default dv-btn-sm" onclick="hit('/api/products')"><i class="bi bi-box-seam"></i> GET /api/products</button>
+        <button class="dv-btn dv-btn-default dv-btn-sm" onclick="hit('/api/products/1')">GET /api/products/1</button>
+        <button class="dv-btn dv-btn-default dv-btn-sm" onclick="hit('/api/products/99')">GET /api/products/99 (404)</button>
+        <button class="dv-btn dv-btn-default dv-btn-sm" onclick="hit('/api/cache-status')">GET /api/cache-status</button>
+        <button class="dv-btn dv-btn-sm" id="autoBtn" style="background:#dafbe1;border-color:#1a7f37;color:#1a7f37" onclick="toggleAuto()"><i class="bi bi-play-fill"></i> Auto-fire</button>
+      </div>
+
+      <!-- Log table -->
+      <div class="dv-log-wrap">
+        <div class="dv-log-header-row">
+          <span>Method</span><span>URL</span><span>Status</span><span>Bytes</span><span>Time (ms)</span><span>Timestamp</span>
+        </div>
+        <div id="logBody"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ VIEW: CACHE ════════════════════════════════════ -->
+  <div class="dv-view" id="view-cache">
+    <div class="container">
+      <div class="dv-page-header">
+        <div class="dv-eyebrow"><i class="bi bi-lightning-charge-fill"></i> node-cache — In-Memory Caching</div>
+        <h1 class="dv-page-title">Cache Dashboard</h1>
+        <p class="dv-page-desc">Cache TTL is <strong>30 seconds</strong>. First request hits DB (slow ~200ms). Subsequent requests serve from cache (instant). A cron job flushes cache every minute.</p>
+      </div>
+
+      <div class="dv-cache-demo-grid">
+        <!-- Fetch products -->
+        <div class="dv-card">
+          <div class="dv-card-header"><i class="bi bi-box-seam" style="color:var(--dv-blue)"></i> Products API <span class="dv-method-pill get">GET</span></div>
+          <div class="dv-card-body">
+            <div class="dv-cache-btns">
+              <button class="dv-btn dv-btn-primary w-100" id="fetchAllBtn"><i class="bi bi-download"></i> Fetch All Products</button>
+              <button class="dv-btn dv-btn-default w-100 mt-2" id="flushBtn"><i class="bi bi-trash3"></i> Flush Cache</button>
+            </div>
+            <div class="dv-cache-source" id="cacheSource" style="display:none"></div>
+            <div id="productsResult"></div>
+          </div>
+        </div>
+
+        <!-- Cache stats -->
+        <div class="dv-card">
+          <div class="dv-card-header"><i class="bi bi-speedometer2" style="color:var(--dv-green)"></i> Cache Stats</div>
+          <div class="dv-card-body" id="cacheStats">
+            <div class="dv-cache-stat-row"><span>Keys Cached</span><strong id="cacheKeys">—</strong></div>
+            <div class="dv-cache-stat-row"><span>Cache Hits</span><strong id="cacheHits" class="green-val">—</strong></div>
+            <div class="dv-cache-stat-row"><span>Cache Misses</span><strong id="cacheMisses" class="orange-val">—</strong></div>
+            <div class="dv-cache-stat-row"><span>TTL</span><strong>30 seconds</strong></div>
+            <div class="dv-cache-stat-row"><span>Check Period</span><strong>10 seconds</strong></div>
+            <div class="dv-cached-keys mt-2" id="cachedKeysList"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- How it works -->
+      <div class="dv-how-grid mt-4">
+        <div class="dv-how-card">
+          <div class="dv-how-num">1</div>
+          <strong>First Request</strong>
+          <p>Cache MISS → fetches from "database" (simulated 200ms delay) → stores in cache</p>
+        </div>
+        <div class="dv-how-card">
+          <div class="dv-how-num">2</div>
+          <strong>Repeat Request</strong>
+          <p>Cache HIT → returns instantly from memory — no DB call needed</p>
+        </div>
+        <div class="dv-how-card">
+          <div class="dv-how-num">3</div>
+          <strong>After 30s (TTL)</strong>
+          <p>Key expires automatically → next request is a MISS again</p>
+        </div>
+        <div class="dv-how-card">
+          <div class="dv-how-num">4</div>
+          <strong>Cron Flush</strong>
+          <p>Every 1 minute, cron job clears all cache keys to simulate a full refresh</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ VIEW: CRON ════════════════════════════════════ -->
+  <div class="dv-view" id="view-cron">
+    <div class="container">
+      <div class="dv-page-header">
+        <div class="dv-eyebrow"><i class="bi bi-clock-history"></i> node-cron — Scheduled Jobs</div>
+        <h1 class="dv-page-title">Cron Jobs</h1>
+        <p class="dv-page-desc">Three scheduled background tasks run on the server using <code>node-cron</code>. Logs auto-refresh in real time.</p>
+      </div>
+
+      <!-- Job schedule cards -->
+      <div class="dv-cron-grid">
+        <div class="dv-cron-card">
+          <div class="dv-cron-icon blue"><i class="bi bi-box-seam-fill"></i></div>
+          <div class="dv-cron-body">
+            <strong>📦 Cache Sweep</strong>
+            <div class="dv-cron-schedule">Every 10 seconds</div>
+            <p>Reports the number of cached keys and current hit/miss stats.</p>
+          </div>
+          <div class="dv-cron-badge blue"><code>*/10 * * * * *</code></div>
+        </div>
+        <div class="dv-cron-card">
+          <div class="dv-cron-icon green"><i class="bi bi-bar-chart-fill"></i></div>
+          <div class="dv-cron-body">
+            <strong>📊 Stats Snapshot</strong>
+            <div class="dv-cron-schedule">Every 30 seconds</div>
+            <p>Logs total requests, cache hits, and cache misses as a snapshot.</p>
+          </div>
+          <div class="dv-cron-badge green"><code>*/30 * * * * *</code></div>
+        </div>
+        <div class="dv-cron-card">
+          <div class="dv-cron-icon red"><i class="bi bi-trash3-fill"></i></div>
+          <div class="dv-cron-body">
+            <strong>🧹 Cache Flush</strong>
+            <div class="dv-cron-schedule">Every 1 minute</div>
+            <p>Automatically clears all in-memory cache keys so data stays fresh.</p>
+          </div>
+          <div class="dv-cron-badge red"><code>* * * * *</code></div>
+        </div>
+      </div>
+
+      <!-- Live cron log -->
+      <div class="dv-cron-log-wrap mt-4">
+        <div class="dv-cron-log-header">
+          <i class="bi bi-clock-history"></i> Live Cron Log
+          <div class="dv-live-dot ms-2"></div>
+          <span class="dv-live-label">auto-refreshing</span>
+        </div>
+        <div id="cronLogBody"></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="dv-footer">
+  <div class="container dv-footer-inner">
+    <span class="dv-footer-brand"><i class="bi bi-server"></i> &copy; <%= new Date().getFullYear() %> Ishan Agrawal · Cognifyz</span>
+    <div class="dv-footer-links">
+      <a href="https://github.com/ishan2005/cognifyz-webdev-internship" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/in/agrawalishan2005" target="_blank">LinkedIn</a>
+    </div>
+    <span class="dv-footer-task">Task 08 — morgan · node-cache · node-cron</span>
+  </div>
+</footer>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

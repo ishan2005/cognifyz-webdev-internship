@@ -1,0 +1,21 @@
+{
+  "name": "task-08-server-features",
+  "version": "1.0.0",
+  "description": "Cognifyz Task 08 - Logging (morgan), Caching (node-cache), Cron Jobs (node-cron)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "morgan": "^1.10.0",
+    "node-cache": "^5.1.2",
+    "node-cron": "^3.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
