@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="DataVault Task 07 — External API + Rate Limiting Weather App"/>
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+<nav class="dv-navbar">
+  <div class="container">
+    <a href="/" class="dv-brand"><i class="bi bi-cloud-sun-fill"></i> DataVault Weather</a>
+    <div class="dv-nav-tabs">
+      <button class="dv-tab active" data-view="search"><i class="bi bi-search"></i> Search</button>
+      <button class="dv-tab" data-view="cities"><i class="bi bi-geo-alt"></i> Cities</button>
+      <button class="dv-tab" data-view="ratelimit"><i class="bi bi-speedometer2"></i> Rate Limit</button>
+    </div>
+    <div class="dv-nav-right">
+      <span class="dv-task-pill">Task 07</span>
+      <a href="https://github.com/ishan2005/cognifyz-webdev-internship" target="_blank" class="dv-btn dv-btn-sm dv-btn-outline"><i class="bi bi-github"></i></a>
+    </div>
+  </div>
+</nav>
+
+<main class="dv-main">
+
+  <!-- ══════ VIEW: SEARCH ════════════════════════════════════ -->
+  <div class="dv-view active" id="view-search">
+    <div class="container">
+      <div class="dv-page-header text-center">
+        <div class="dv-eyebrow"><i class="bi bi-cloud-download-fill"></i> OpenWeatherMap API · express-rate-limit</div>
+        <h1 class="dv-page-title">Live Weather Search</h1>
+        <p class="dv-page-desc">Fetches real-time weather from the <strong>OpenWeatherMap API</strong>. Rate-limited to <strong>10 requests/minute</strong> per IP.</p>
+      </div>
+
+      <!-- Search bar -->
+      <div class="dv-search-card">
+        <div class="dv-search-row">
+          <div class="dv-search-wrap">
+            <i class="bi bi-search dv-search-icon"></i>
+            <input class="dv-input dv-search-input" id="cityInput" placeholder="Enter city name... (e.g. Mumbai, London, Tokyo)" autocomplete="off"/>
+          </div>
+          <button class="dv-btn dv-btn-primary" id="searchBtn">
+            <i class="bi bi-cloud-download"></i> Get Weather
+          </button>
+        </div>
+        <!-- Quick city pills -->
+        <div class="dv-quick-cities">
+          <span class="dv-quick-label">Quick:</span>
+          <% ['Mumbai','Delhi','Bangalore','London','Tokyo','New York','Paris','Dubai'].forEach(c => { %>
+          <button class="dv-city-pill" data-city="<%= c %>"><%= c %></button>
+          <% }) %>
+        </div>
+      </div>
+
+      <!-- Rate limit bar -->
+      <div class="dv-rate-bar" id="rateBar" style="display:none">
+        <div class="dv-rate-info">
+          <i class="bi bi-speedometer2"></i>
+          <span id="rateText">10 / 10 remaining</span>
+        </div>
+        <div class="dv-rate-track">
+          <div class="dv-rate-fill" id="rateFill"></div>
+        </div>
+        <span class="dv-rate-reset" id="rateReset"></span>
+      </div>
+
+      <!-- Weather card -->
+      <div id="weatherResult"></div>
+
+      <!-- Error display -->
+      <div class="dv-error-card" id="errorCard" style="display:none">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        <div>
+          <strong id="errorTitle">Error</strong>
+          <p id="errorMsg"></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════ VIEW: CITIES ════════════════════════════════════ -->
+  <div class="dv-view" id="view-cities">
+    <div class="container">
+      <div class="dv-page-header">
+        <div class="dv-eyebrow"><i class="bi bi-geo-alt-fill"></i> Multi-City Dashboard</div>
+        <h1 class="dv-page-title">India Weather Dashboard</h1>
+        <p class="dv-page-desc">Weather across 5 major Indian cities. Data cached client-side for 5 minutes to respect rate limits.</p>
+      </div>
+      <div class="dv-cities-grid" id="citiesGrid">
+        <div class="dv-loading"><i class="bi bi-cloud-arrow-down"></i><p>Fetching city data...</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════ VIEW: RATE LIMIT DEMO ══════════════════════════ -->
+  <div class="dv-view" id="view-ratelimit">
+    <div class="container">
+      <div class="dv-page-header">
+        <div class="dv-eyebrow"><i class="bi bi-shield-exclamation"></i> express-rate-limit</div>
+        <h1 class="dv-page-title">Rate Limiting Demo</h1>
+        <p class="dv-page-desc">This app uses <code>express-rate-limit</code> middleware to protect API endpoints from abuse.</p>
+      </div>
+
+      <div class="dv-rl-grid">
+        <!-- Config cards -->
+        <div class="dv-rl-card">
+          <div class="dv-rl-icon blue"><i class="bi bi-grid-3x3-gap-fill"></i></div>
+          <div>
+            <strong>General API Limiter</strong>
+            <p>Route: <code>/api/*</code></p>
+            <p>Limit: <strong>30 requests / 15 minutes</strong></p>
+            <p>Headers: <code>RateLimit-*</code> (RFC standard)</p>
+          </div>
+        </div>
+        <div class="dv-rl-card">
+          <div class="dv-rl-icon orange"><i class="bi bi-cloud-lightning-fill"></i></div>
+          <div>
+            <strong>Search Limiter</strong>
+            <p>Route: <code>/api/weather</code></p>
+            <p>Limit: <strong>10 requests / 1 minute</strong></p>
+            <p>Returns: <code>429 Too Many Requests</code></p>
+          </div>
+        </div>
+        <div class="dv-rl-card">
+          <div class="dv-rl-icon green"><i class="bi bi-check-circle-fill"></i></div>
+          <div>
+            <strong>Response Headers Sent</strong>
+            <p><code>RateLimit-Limit: 10</code></p>
+            <p><code>RateLimit-Remaining: N</code></p>
+            <p><code>RateLimit-Reset: timestamp</code></p>
+          </div>
+        </div>
+        <div class="dv-rl-card">
+          <div class="dv-rl-icon red"><i class="bi bi-slash-circle-fill"></i></div>
+          <div>
+            <strong>429 Response Body</strong>
+            <pre class="dv-rl-code">{
+  "success": false,
+  "error": "Too many requests"
+}</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live test -->
+      <div class="dv-card mt-4">
+        <div class="dv-card-header"><i class="bi bi-terminal-fill" style="color:var(--dv-blue)"></i> Live Rate Limit Test</div>
+        <div class="dv-card-body">
+          <p style="color:var(--dv-text-2);margin-bottom:14px">Click the button rapidly to trigger the rate limiter and see the 429 response:</p>
+          <div class="dv-rl-test-row">
+            <button class="dv-btn dv-btn-primary" id="spamBtn">
+              <i class="bi bi-send"></i> Send Request
+            </button>
+            <div class="dv-rl-counter">
+              <span id="reqCount">0</span> requests sent · <span id="reqOk">0</span> ✅ · <span id="reqLimited">0</span> 🚫
+            </div>
+          </div>
+          <div class="dv-rl-responses" id="rlResponses"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<footer class="dv-footer">
+  <div class="container dv-footer-inner">
+    <span class="dv-footer-brand"><i class="bi bi-cloud-sun-fill"></i> &copy; <%= new Date().getFullYear() %> Ishan Agrawal · Cognifyz</span>
+    <div class="dv-footer-links">
+      <a href="https://github.com/ishan2005/cognifyz-webdev-internship" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/in/agrawalishan2005" target="_blank">LinkedIn</a>
+    </div>
+    <span class="dv-footer-task">Task 07 — OpenWeatherMap · express-rate-limit · Fetch API</span>
+  </div>
+</footer>
+
+<script src="/js/app.js"></script>
+</body>
+</html>

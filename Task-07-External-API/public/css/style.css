@@ -1,0 +1,140 @@
+/* DataVault Task 07 — Weather API · GitHub Light Theme */
+:root{--dv-bg:#ffffff;--dv-bg-2:#f6f8fa;--dv-bg-3:#eaeef2;--dv-border:#d0d7de;--dv-text:#1f2328;--dv-text-2:#656d76;--dv-text-3:#818b98;--dv-blue:#0969da;--dv-green:#1a7f37;--dv-orange:#c86000;--dv-red:#cf222e;--dv-purple:#8250df;--dv-radius:8px;--dv-radius-lg:12px;--dv-shadow:0 1px 3px rgba(31,35,40,0.12);--dv-shadow-lg:0 8px 24px rgba(31,35,40,0.1);--dv-mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;--dv-font:'Inter',-apple-system,sans-serif;--t:all 0.2s ease}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--dv-font);background:var(--dv-bg);color:var(--dv-text);font-size:14px;line-height:1.5}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--dv-bg-2)}::-webkit-scrollbar-thumb{background:var(--dv-border);border-radius:3px}
+code{background:var(--dv-bg-2);border:1px solid var(--dv-border);border-radius:4px;padding:1px 6px;font-family:var(--dv-mono);font-size:12px}
+.w-100{width:100%}.mt-4{margin-top:16px}.text-center{text-align:center}
+
+/* Navbar */
+.dv-navbar{background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--dv-border);position:sticky;top:0;z-index:100;height:56px;display:flex;align-items:center}
+.dv-navbar .container{display:flex;align-items:center;gap:12px;max-width:1100px;margin:0 auto;padding:0 24px}
+.dv-brand{display:flex;align-items:center;gap:7px;font-weight:800;font-size:15px;color:var(--dv-text);text-decoration:none;flex-shrink:0}
+.dv-brand i{color:var(--dv-blue)}
+.dv-nav-tabs{display:flex;gap:2px;flex:1;justify-content:center}
+.dv-tab{display:flex;align-items:center;gap:6px;padding:5px 14px;border-radius:var(--dv-radius);font-size:13px;font-weight:600;color:var(--dv-text-2);background:none;border:1px solid transparent;cursor:pointer;transition:var(--t)}
+.dv-tab:hover{background:var(--dv-bg-2);color:var(--dv-text)}
+.dv-tab.active{background:var(--dv-bg-2);border-color:var(--dv-border);color:var(--dv-text)}
+.dv-nav-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.dv-task-pill{background:rgba(9,105,218,0.1);border:1px solid rgba(9,105,218,0.25);color:var(--dv-blue);padding:2px 10px;border-radius:50px;font-size:11px;font-weight:700}
+
+/* Buttons */
+.dv-btn{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:var(--dv-radius);font-size:13px;font-weight:600;font-family:var(--dv-font);cursor:pointer;border:1px solid;transition:var(--t);text-decoration:none;white-space:nowrap}
+.dv-btn-sm{padding:4px 10px;font-size:12px}
+.dv-btn-primary{background:var(--dv-blue);border-color:rgba(9,105,218,0.4);color:#fff}
+.dv-btn-primary:hover{background:#0860ca;color:#fff}
+.dv-btn-outline{background:transparent;border-color:var(--dv-border);color:var(--dv-text)}
+.dv-btn-outline:hover{border-color:var(--dv-blue);color:var(--dv-blue)}
+
+/* Layout */
+.dv-main{min-height:calc(100vh - 56px - 56px);padding:36px 0 60px}
+.container{max-width:1100px;margin:0 auto;padding:0 24px}
+.dv-view{display:none}
+.dv-view.active{display:block;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* Page Header */
+.dv-page-header{margin-bottom:28px}
+.dv-eyebrow{display:inline-flex;align-items:center;gap:6px;background:rgba(9,105,218,0.08);border:1px solid rgba(9,105,218,0.2);color:var(--dv-blue);padding:3px 12px;border-radius:50px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.dv-page-title{font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:6px}
+.dv-page-desc{font-size:14px;color:var(--dv-text-2);line-height:1.65}
+
+/* Search card */
+.dv-search-card{background:var(--dv-bg);border:1px solid var(--dv-border);border-radius:var(--dv-radius-lg);padding:20px;box-shadow:var(--dv-shadow);margin-bottom:16px}
+.dv-search-row{display:flex;gap:10px;margin-bottom:14px}
+.dv-search-wrap{position:relative;flex:1}
+.dv-search-icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--dv-text-3);font-size:14px}
+.dv-input{width:100%;background:var(--dv-bg);border:1px solid var(--dv-border);border-radius:var(--dv-radius);color:var(--dv-text);padding:7px 12px;font-size:14px;font-family:var(--dv-font);transition:var(--t);outline:none}
+.dv-input:focus{border-color:var(--dv-blue);box-shadow:0 0 0 3px rgba(9,105,218,0.1)}
+.dv-search-input{padding-left:34px;font-size:14px}
+.dv-quick-cities{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dv-quick-label{font-size:12px;color:var(--dv-text-3);font-weight:600}
+.dv-city-pill{background:var(--dv-bg-2);border:1px solid var(--dv-border);border-radius:50px;padding:3px 12px;font-size:12px;font-weight:600;color:var(--dv-text-2);cursor:pointer;transition:var(--t)}
+.dv-city-pill:hover{background:#ddf4ff;border-color:var(--dv-blue);color:var(--dv-blue)}
+
+/* Rate bar */
+.dv-rate-bar{background:var(--dv-bg-2);border:1px solid var(--dv-border);border-radius:var(--dv-radius);padding:10px 14px;margin-bottom:16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.dv-rate-info{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--dv-text-2);flex-shrink:0}
+.dv-rate-track{flex:1;height:6px;background:var(--dv-bg-3);border-radius:3px;overflow:hidden;min-width:80px}
+.dv-rate-fill{height:100%;background:var(--dv-green);border-radius:3px;transition:width .4s ease,background .4s ease}
+.dv-rate-fill.warn{background:var(--dv-orange)}
+.dv-rate-fill.danger{background:var(--dv-red)}
+.dv-rate-reset{font-size:11px;color:var(--dv-text-3);font-family:var(--dv-mono);flex-shrink:0}
+
+/* Weather card */
+.dv-weather-card{background:var(--dv-bg);border:1px solid var(--dv-border);border-radius:var(--dv-radius-lg);overflow:hidden;box-shadow:var(--dv-shadow-lg);animation:fadeIn .3s ease}
+.dv-wc-header{padding:24px;display:flex;align-items:flex-start;justify-content:space-between;border-bottom:1px solid var(--dv-border)}
+.dv-wc-city{font-size:22px;font-weight:800;margin-bottom:4px}
+.dv-wc-country{font-size:13px;color:var(--dv-text-2)}
+.dv-wc-temp-block{text-align:right}
+.dv-wc-temp{font-size:48px;font-weight:800;line-height:1;color:var(--dv-blue)}
+.dv-wc-feels{font-size:12px;color:var(--dv-text-3);margin-top:4px}
+.dv-wc-icon{font-size:48px;line-height:1}
+.dv-wc-desc{font-size:14px;font-weight:500;color:var(--dv-text-2);text-transform:capitalize;margin-top:4px}
+.dv-wc-stats{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:0}
+.dv-wc-stat{padding:14px 18px;border-right:1px solid var(--dv-border);border-bottom:1px solid var(--dv-border)}
+.dv-wc-stat:nth-child(4n){border-right:none}
+.dv-wc-stat-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--dv-text-3);margin-bottom:4px}
+.dv-wc-stat-val{font-size:16px;font-weight:700}
+.dv-wc-footer{padding:12px 18px;background:var(--dv-bg-2);font-size:11px;color:var(--dv-text-3);display:flex;align-items:center;justify-content:space-between}
+.dv-mock-badge{background:#fff8c5;border:1px solid #c86000;color:#c86000;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700}
+
+/* Error card */
+.dv-error-card{background:#ffebe9;border:1px solid rgba(207,34,46,0.3);border-radius:var(--dv-radius);padding:14px 16px;display:flex;align-items:flex-start;gap:12px;margin-top:16px}
+.dv-error-card i{color:var(--dv-red);font-size:18px;flex-shrink:0}
+.dv-error-card strong{display:block;color:var(--dv-red);margin-bottom:3px}
+.dv-error-card p{color:var(--dv-red);font-size:13px;margin:0}
+
+/* Cities grid */
+.dv-cities-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.dv-city-card{background:var(--dv-bg);border:1px solid var(--dv-border);border-radius:var(--dv-radius-lg);padding:18px;transition:var(--t);animation:fadeIn .25s ease}
+.dv-city-card:hover{box-shadow:var(--dv-shadow-lg);transform:translateY(-2px);border-color:rgba(9,105,218,0.2)}
+.dv-city-card-name{font-size:15px;font-weight:700;margin-bottom:4px}
+.dv-city-card-icon{font-size:36px;margin:8px 0}
+.dv-city-card-temp{font-size:28px;font-weight:800;color:var(--dv-blue)}
+.dv-city-card-desc{font-size:12px;color:var(--dv-text-2);text-transform:capitalize;margin-bottom:8px}
+.dv-city-card-hum{font-size:12px;color:var(--dv-text-3)}
+.dv-loading{display:flex;flex-direction:column;align-items:center;padding:48px;color:var(--dv-text-3);gap:10px;grid-column:1/-1}
+.dv-loading i{font-size:36px;animation:spin 1.5s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Rate limit section */
+.dv-rl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.dv-rl-card{background:var(--dv-bg);border:1px solid var(--dv-border);border-radius:var(--dv-radius-lg);padding:18px;display:flex;align-items:flex-start;gap:14px;transition:var(--t)}
+.dv-rl-card:hover{box-shadow:var(--dv-shadow-lg)}
+.dv-rl-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.dv-rl-icon.blue{background:rgba(9,105,218,0.1);color:var(--dv-blue)}
+.dv-rl-icon.orange{background:rgba(200,96,0,0.1);color:var(--dv-orange)}
+.dv-rl-icon.green{background:rgba(26,127,55,0.1);color:var(--dv-green)}
+.dv-rl-icon.red{background:rgba(207,34,46,0.1);color:var(--dv-red)}
+.dv-rl-card strong{display:block;font-size:14px;font-weight:700;margin-bottom:6px}
+.dv-rl-card p{font-size:12px;color:var(--dv-text-2);margin-bottom:3px}
+.dv-rl-code{background:var(--dv-bg-2);border:1px solid var(--dv-border);border-radius:4px;padding:8px;font-family:var(--dv-mono);font-size:11px;white-space:pre;margin-top:4px}
+
+/* Card */
+.dv-card{background:var(--dv-bg);border:1px solid var(--dv-border);border-radius:var(--dv-radius-lg);overflow:hidden;box-shadow:var(--dv-shadow)}
+.dv-card-header{background:var(--dv-bg-2);border-bottom:1px solid var(--dv-border);padding:10px 16px;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
+.dv-card-body{padding:18px}
+
+/* Rate limit test */
+.dv-rl-test-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.dv-rl-counter{font-size:13px;color:var(--dv-text-2)}
+.dv-rl-counter span{font-weight:700;color:var(--dv-text)}
+.dv-rl-responses{margin-top:12px;display:flex;flex-direction:column;gap:6px;max-height:240px;overflow-y:auto}
+.dv-rl-resp{padding:7px 12px;border-radius:var(--dv-radius);font-size:12px;font-family:var(--dv-mono);animation:fadeIn .15s ease;display:flex;align-items:center;gap:8px}
+.dv-rl-resp.ok{background:#dafbe1;border:1px solid rgba(26,127,55,0.2);color:var(--dv-green)}
+.dv-rl-resp.limited{background:#ffebe9;border:1px solid rgba(207,34,46,0.2);color:var(--dv-red)}
+
+/* Footer */
+.dv-footer{background:var(--dv-bg-2);border-top:1px solid var(--dv-border);padding:18px 0}
+.dv-footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.dv-footer-brand{font-size:12px;color:var(--dv-text-2);font-weight:500;display:flex;align-items:center;gap:6px}
+.dv-footer-links{display:flex;gap:16px}
+.dv-footer-links a{color:var(--dv-blue);font-size:12px;text-decoration:none}
+.dv-footer-links a:hover{text-decoration:underline}
+.dv-footer-task{font-size:11px;color:var(--dv-text-3)}
+@media(max-width:767px){.dv-footer-task{display:none}.dv-search-row{flex-direction:column}}
+
+/* Weather icons map */
+.wi-01d,.wi-01n{content:'☀️'}
