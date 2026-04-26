@@ -30,7 +30,7 @@ Each task is **self-contained in its own folder** with full source code, a detai
 | 02 | [Form Validation](./Task-02-Form-Validation/) | 🟢 Beginner | Client-side JS, Server validation | ✅ Done | [▶ Watch](https://linkedin.com) |
 | 03 | [Responsive UI Design](./Task-03-Responsive-Design/) | 🟡 Intermediate | Bootstrap 5, CSS Animations | ✅ Done | [▶ Watch](https://linkedin.com) |
 | 04 | [Advanced UI & Dynamic DOM](./Task-04-Advanced-UI/) | 🟡 Intermediate | Password Meter, Hash Routing, DOM | ✅ Done | [▶ Watch](https://linkedin.com) |
-| 05 | [REST API — CRUD](./Task-05-REST-API/) | 🔴 Advanced | GET/POST/PUT/DELETE, Fetch API | ⏳ Coming Soon | — |
+| 05 | [REST API — CRUD](./Task-05-REST-API/) | 🔴 Advanced | GET/POST/PUT/DELETE, Fetch API | ✅ Done | [▶ Watch](https://linkedin.com) |
 | 06 | [Database & Authentication](./Task-06-Database-Auth/) | 🔴 Advanced | MongoDB, Mongoose, JWT, bcrypt | ⏳ Coming Soon | — |
 | 07 | [External API & Rate Limiting](./Task-07-External-API/) | ⚫ Expert | OpenWeatherMap, express-rate-limit | ⏳ Coming Soon | — |
 | 08 | [Logging, Caching & Cron Jobs](./Task-08-Server-Features/) | ⚫ Expert | morgan, node-cache, node-cron | ⏳ Coming Soon | — |
