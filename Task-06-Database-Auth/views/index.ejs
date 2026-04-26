@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="DataVault Task 06 — MongoDB Atlas + JWT Authentication"/>
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+
+<!-- ─── NAVBAR ──────────────────────────────────────────────── -->
+<nav class="dv-navbar">
+  <div class="container">
+    <a href="/" class="dv-brand"><i class="bi bi-database-fill-lock"></i> DataVault</a>
+    <div class="dv-nav-tabs">
+      <button class="dv-tab active" data-view="auth"><i class="bi bi-person-lock"></i> Auth</button>
+      <button class="dv-tab" data-view="dashboard"><i class="bi bi-speedometer2"></i> Dashboard</button>
+      <button class="dv-tab" data-view="users"><i class="bi bi-people"></i> Users</button>
+    </div>
+    <div class="dv-nav-right">
+      <div class="dv-db-status" id="dbStatus">
+        <span class="dv-db-dot" id="dbDot"></span>
+        <span id="dbLabel">Connecting...</span>
+      </div>
+      <span class="dv-task-pill">Task 06</span>
+      <a href="https://github.com/ishan2005/cognifyz-webdev-internship" target="_blank" class="dv-btn dv-btn-sm dv-btn-outline">
+        <i class="bi bi-github"></i>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<main class="dv-main">
+
+  <!-- ══════════ VIEW: AUTH ═══════════════════════════════════ -->
+  <div class="dv-view active" id="view-auth">
+    <div class="container">
+      <div class="dv-page-header text-center">
+        <div class="dv-eyebrow"><i class="bi bi-shield-lock-fill"></i> MongoDB Atlas · JWT · bcrypt</div>
+        <h1 class="dv-page-title">Database Authentication</h1>
+        <p class="dv-page-desc">Register and login with real MongoDB Atlas persistence, bcrypt password hashing, and JWT tokens.</p>
+      </div>
+
+      <div class="dv-auth-grid">
+
+        <!-- Register Card -->
+        <div class="dv-card">
+          <div class="dv-card-header">
+            <i class="bi bi-person-plus-fill" style="color:var(--dv-green)"></i> Register
+            <span class="dv-method-pill post">POST /api/auth/register</span>
+          </div>
+          <div class="dv-card-body">
+            <div class="dv-form-group">
+              <label class="dv-label">Full Name</label>
+              <input class="dv-input" id="regName" placeholder="Ishan Agrawal"/>
+            </div>
+            <div class="dv-form-group">
+              <label class="dv-label">Email</label>
+              <input class="dv-input" id="regEmail" type="email" placeholder="ishan@example.com"/>
+            </div>
+            <div class="dv-form-group">
+              <label class="dv-label">Password</label>
+              <div class="dv-input-wrap">
+                <input class="dv-input" id="regPassword" type="password" placeholder="Min 6 characters"/>
+                <button class="dv-eye-btn" onclick="togglePw('regPassword',this)"><i class="bi bi-eye"></i></button>
+              </div>
+            </div>
+            <button class="dv-btn dv-btn-primary w-100" id="registerBtn">
+              <i class="bi bi-person-check-fill"></i> Create Account
+            </button>
+            <div class="dv-auth-msg" id="regMsg"></div>
+          </div>
+        </div>
+
+        <!-- Login Card -->
+        <div class="dv-card">
+          <div class="dv-card-header">
+            <i class="bi bi-box-arrow-in-right" style="color:var(--dv-blue)"></i> Login
+            <span class="dv-method-pill post">POST /api/auth/login</span>
+          </div>
+          <div class="dv-card-body">
+            <div class="dv-form-group">
+              <label class="dv-label">Email</label>
+              <input class="dv-input" id="loginEmail" type="email" placeholder="your@email.com"/>
+            </div>
+            <div class="dv-form-group">
+              <label class="dv-label">Password</label>
+              <div class="dv-input-wrap">
+                <input class="dv-input" id="loginPassword" type="password" placeholder="Your password"/>
+                <button class="dv-eye-btn" onclick="togglePw('loginPassword',this)"><i class="bi bi-eye"></i></button>
+              </div>
+            </div>
+            <button class="dv-btn dv-btn-primary w-100" id="loginBtn">
+              <i class="bi bi-box-arrow-in-right"></i> Sign In
+            </button>
+            <div class="dv-auth-msg" id="loginMsg"></div>
+          </div>
+        </div>
+
+        <!-- JWT Token Card -->
+        <div class="dv-card dv-token-card">
+          <div class="dv-card-header">
+            <i class="bi bi-key-fill" style="color:var(--dv-orange)"></i> JWT Token
+            <span class="dv-method-pill get">GET /api/auth/me</span>
+          </div>
+          <div class="dv-card-body">
+            <div class="dv-token-display" id="tokenDisplay">
+              <div class="dv-token-empty"><i class="bi bi-shield-slash"></i><p>No token — register or login first</p></div>
+            </div>
+            <button class="dv-btn dv-btn-default w-100 mt-2" id="verifyTokenBtn" disabled>
+              <i class="bi bi-patch-check"></i> Verify Token (GET /me)
+            </button>
+            <button class="dv-btn dv-btn-danger w-100 mt-2" id="logoutBtn" style="display:none">
+              <i class="bi bi-box-arrow-right"></i> Logout
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ VIEW: DASHBOARD ══════════════════════════════ -->
+  <div class="dv-view" id="view-dashboard">
+    <div class="container">
+      <div class="dv-page-header">
+        <div class="dv-eyebrow"><i class="bi bi-person-badge-fill"></i> Protected Route</div>
+        <h1 class="dv-page-title">User Dashboard</h1>
+        <p class="dv-page-desc">This view requires a valid JWT token. Data fetched from <code>GET /api/auth/me</code>.</p>
+      </div>
+
+      <!-- Not logged in state -->
+      <div id="dashboardLocked" class="dv-locked-state">
+        <i class="bi bi-lock-fill"></i>
+        <h3>Protected Route</h3>
+        <p>You must be logged in to view this page.</p>
+        <button class="dv-btn dv-btn-primary" onclick="switchView('auth')">
+          <i class="bi bi-box-arrow-in-right"></i> Login to continue
+        </button>
+      </div>
+
+      <!-- Logged in state -->
+      <div id="dashboardContent" style="display:none">
+        <div class="dv-profile-card">
+          <div class="dv-avatar" id="dashAvatar">?</div>
+          <div class="dv-profile-info">
+            <h2 id="dashName">—</h2>
+            <p id="dashEmail" class="dv-text-muted">—</p>
+            <div class="dv-profile-meta">
+              <span class="dv-badge" id="dashRole">user</span>
+              <span class="dv-text-sm" id="dashJoined">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="dv-info-cards mt-4">
+          <div class="dv-info-card">
+            <i class="bi bi-shield-check-fill" style="color:var(--dv-green)"></i>
+            <div>
+              <strong>bcrypt Password Hashing</strong>
+              <p>Password stored as a 60-char bcrypt hash (salt rounds: 12). Never stored in plain text.</p>
+            </div>
+          </div>
+          <div class="dv-info-card">
+            <i class="bi bi-key-fill" style="color:var(--dv-orange)"></i>
+            <div>
+              <strong>JWT Token (7 day expiry)</strong>
+              <p>Stateless authentication — token signed with HS256. Send as <code>Authorization: Bearer &lt;token&gt;</code>.</p>
+            </div>
+          </div>
+          <div class="dv-info-card">
+            <i class="bi bi-cloud-fill" style="color:var(--dv-blue)"></i>
+            <div>
+              <strong>MongoDB Atlas Persistence</strong>
+              <p>Data survives server restarts — stored in <code>datavault</code> database, <code>users</code> collection.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ VIEW: USERS ═══════════════════════════════════ -->
+  <div class="dv-view" id="view-users">
+    <div class="container">
+      <div class="dv-page-header">
+        <div class="dv-eyebrow"><i class="bi bi-people-fill"></i> Protected · GET /api/users</div>
+        <h1 class="dv-page-title">Registered Users</h1>
+        <p class="dv-page-desc">All users stored in MongoDB Atlas. Requires JWT token to access.</p>
+      </div>
+      <div id="usersLocked" class="dv-locked-state">
+        <i class="bi bi-lock-fill"></i>
+        <h3>Protected Route</h3>
+        <p>Login to see all registered users.</p>
+        <button class="dv-btn dv-btn-primary" onclick="switchView('auth')">
+          <i class="bi bi-box-arrow-in-right"></i> Login
+        </button>
+      </div>
+      <div id="usersContent" style="display:none">
+        <div class="dv-users-header">
+          <span id="usersCount" class="dv-text-muted">Loading...</span>
+          <button class="dv-btn dv-btn-default dv-btn-sm" id="refreshUsersBtn"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+        </div>
+        <div class="dv-table-wrap">
+          <table class="dv-table">
+            <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Role</th><th>Joined</th><th></th></tr></thead>
+            <tbody id="usersTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer class="dv-footer">
+  <div class="container dv-footer-inner">
+    <span class="dv-footer-brand"><i class="bi bi-database-fill-lock"></i> &copy; <%= new Date().getFullYear() %> Ishan Agrawal · Cognifyz</span>
+    <div class="dv-footer-links">
+      <a href="https://github.com/ishan2005/cognifyz-webdev-internship" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/in/agrawalishan2005" target="_blank">LinkedIn</a>
+    </div>
+    <span class="dv-footer-task">Task 06 — MongoDB Atlas · Mongoose · JWT · bcrypt</span>
+  </div>
+</footer>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
