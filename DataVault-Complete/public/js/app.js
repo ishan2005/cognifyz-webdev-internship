@@ -348,6 +348,21 @@ renderTodos();
 // ─── Task routing from hero ───────────────────────────────────
 const task01Route='home',task02Route='auth',task03Route='showcase',task04Route='advanced',task05Route='notes',task06Route='auth',task07Route='weather',task08Route='server';
 
+// ─── Hamburger menu ───────────────────────────────────────────
+const hamburger = document.getElementById('navHamburger');
+const navbar    = document.querySelector('.navbar');
+hamburger.addEventListener('click', () => {
+  navbar.classList.toggle('nav-mobile-open');
+  hamburger.innerHTML = navbar.classList.contains('nav-mobile-open')
+    ? '<i class="bi bi-x-lg"></i>'
+    : '<i class="bi bi-list"></i>';
+});
+// Close menu when any nav button is clicked
+document.querySelectorAll('.nav-btn').forEach(b => b.addEventListener('click', () => {
+  navbar.classList.remove('nav-mobile-open');
+  hamburger.innerHTML = '<i class="bi bi-list"></i>';
+}));
+
 // ─── Init ─────────────────────────────────────────────────────
 updateNav();
 if (user && token) { document.getElementById('verifyBtn').disabled=false; showToken(token); }

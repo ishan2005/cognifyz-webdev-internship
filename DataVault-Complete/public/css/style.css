@@ -169,4 +169,112 @@ pre{padding:12px 14px;font-family:var(--mono);font-size:12px;color:#c9d1d9;overf
 .footer-brand{font-size:12px;color:var(--text2);font-weight:500;display:flex;align-items:center;gap:6px}
 .footer-links{display:flex;gap:16px}.footer-links a{color:var(--blue);font-size:12px}
 .footer-right{font-size:11px;color:var(--text2)}
-@media(max-width:900px){.auth-grid,.dash-widgets,.notes-layout,.cache-grid,.adv-grid,.anim-grid{grid-template-columns:1fr}.token-card{grid-column:1}.nav-links{gap:1px}.hero-title{font-size:36px}}
+/* ── Hamburger menu toggle (hidden by default) ─────────────── */
+.nav-hamburger{display:none;background:none;border:1px solid var(--border);border-radius:6px;padding:5px 9px;cursor:pointer;font-size:16px;color:var(--text);transition:var(--t)}
+.nav-hamburger:hover{background:var(--bg2)}
+.nav-mobile-open .nav-links{display:flex!important;flex-direction:column;position:absolute;top:54px;left:0;right:0;background:rgba(255,255,255,.98);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:8px 12px 12px;z-index:99;gap:2px;box-shadow:0 8px 24px rgba(31,35,40,.12)}
+.nav-mobile-open .nav-btn{justify-content:flex-start;padding:9px 12px;font-size:13px;border-radius:8px}
+
+/* ── Tablet (≤ 900px) ──────────────────────────────────────── */
+@media(max-width:900px){
+  .navbar{position:sticky;top:0}
+  .nav-links{display:none}
+  .nav-hamburger{display:flex;align-items:center;justify-content:center}
+  .nav-inner{position:relative}
+
+  .hero{padding:52px 0}
+  .hero-title{font-size:36px;letter-spacing:-1px}
+  .hero-sub{font-size:14px}
+
+  .auth-grid{grid-template-columns:1fr}
+  .token-card{grid-column:1}
+  .dash-widgets{grid-template-columns:1fr 1fr}
+  .notes-layout{grid-template-columns:1fr}
+  .cache-grid{grid-template-columns:1fr}
+  .adv-grid{grid-template-columns:1fr 1fr}
+  .anim-grid{grid-template-columns:repeat(2,1fr)}
+
+  .log-hdr-row,.log-row{grid-template-columns:60px 1fr 50px 50px;font-size:11px}
+  .log-hdr-row span:last-child,.log-row span:last-child{display:none}
+}
+
+/* ── Mobile (≤ 600px) ──────────────────────────────────────── */
+@media(max-width:600px){
+  .container{padding:0 14px}
+
+  .hero{padding:40px 0}
+  .hero-inner{padding:0 14px}
+  .hero-title{font-size:28px;letter-spacing:-.5px}
+  .hero-sub{font-size:13px;margin-bottom:20px}
+  .hero-badge{font-size:11px;padding:4px 12px}
+  .hero-btns{flex-direction:column;align-items:stretch;gap:10px}
+  .hero-btns .btn{justify-content:center}
+
+  .view{padding:24px 0 48px}
+  .page-header{margin-bottom:20px}
+  .page-header h1{font-size:20px}
+
+  .task-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .task-card{padding:14px}
+  .task-icon{font-size:22px}
+
+  .auth-grid,.dash-widgets,.adv-grid,.anim-grid{grid-template-columns:1fr}
+
+  .notes-layout{grid-template-columns:1fr}
+  .notes-list-header{flex-direction:column;align-items:stretch}
+  .notes-list-header .input{width:100%}
+
+  .profile-card{flex-direction:column;text-align:center;align-items:center}
+  .profile-card>div{text-align:center}
+  .profile-card h2{font-size:18px}
+
+  .search-row{flex-direction:column;gap:8px}
+  .search-row .btn{width:100%;justify-content:center}
+  .quick-pills{gap:5px}
+  .city-pill{font-size:11px;padding:3px 10px}
+
+  .server-tabs{gap:0;overflow-x:auto;padding-bottom:0;white-space:nowrap}
+  .stab{font-size:12px;padding:8px 12px;flex-shrink:0}
+  .stats-row{gap:8px}
+  .stat-chip{min-width:calc(50% - 4px)}
+  .api-row{flex-direction:column;align-items:stretch}
+  .api-row .btn{justify-content:center}
+
+  .log-table{overflow-x:auto}
+  .log-hdr-row,.log-row{grid-template-columns:55px 1fr 45px;min-width:300px}
+  .log-hdr-row span:nth-child(4),.log-hdr-row span:last-child,
+  .log-row span:nth-child(4),.log-row span:last-child{display:none}
+
+  .cache-grid,.cron-cards{gap:10px}
+  .cron-card{padding:12px}
+  .cron-job{min-width:100px}
+
+  .anim-grid{grid-template-columns:1fr 1fr}
+  .glass-inner{padding:24px 16px}
+  .glass-inner h3{font-size:16px}
+
+  .adv-grid{gap:12px}
+  .dom-row{flex-wrap:wrap}
+  .dom-row .input[type="color"]{width:44px}
+
+  .footer-inner{flex-direction:column;align-items:flex-start;gap:8px}
+  .footer-right{display:none}
+
+  .btn-row{flex-direction:column}
+  .btn-row .btn{width:100%;justify-content:center}
+
+  .wc-head{flex-direction:column;gap:10px}
+  .wc-temp{font-size:36px}
+  .wc-icon{font-size:36px}
+}
+
+/* ── Small mobile (≤ 400px) ────────────────────────────────── */
+@media(max-width:400px){
+  .hero-title{font-size:24px}
+  .task-grid{grid-template-columns:1fr}
+  .anim-grid{grid-template-columns:1fr}
+  .stat-chip{min-width:100%}
+  .page-header h1{font-size:18px}
+  .stab{padding:7px 9px;font-size:11px}
+}
+
